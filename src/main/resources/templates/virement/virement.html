@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="fragment/head::head"> </head>
+
+    <body>
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Main wrapper - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <div id="main-wrapper">
+            <!-- ============================================================== -->
+            <!-- Topbar header - style you can find in pages.scss -->
+            <!-- ============================================================== -->
+            <header th:replace="fragment/header::header"> </header>
+            <!-- ============================================================== -->
+            <!-- End Topbar header -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Left Sidebar - style you can find in sidebar.scss  -->
+            <!-- ============================================================== -->
+            <aside th:replace="fragment/slidebar::slidebar"> </aside>
+            <!-- ============================================================== -->
+            <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Page wrapper  -->
+            <!-- ============================================================== -->
+            <div class="page-wrapper">
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <div class="page-breadcrumb">
+                    <div class="row">
+                        <div class="col-12 d-flex no-block align-items-center">
+                            <h4 class="page-title">Formulaire virement</h4>
+                            <div class="ml-auto text-right">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item">
+                                            <a th:href="@{/}">Tableau de bord</a>
+                                        </li>
+                                        <li class="breadcrumb-item active" aria-current="page">Formulaire virement</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Container fluid  -->
+                <!-- ============================================================== -->
+                <div class="container-fluid">
+                    <!-- ============================================================== -->
+                    <!-- Start Page Content -->
+                    <!-- ============================================================== -->
+                    <div class="card">
+                        <div class="card-body wizard-content">
+                            <h4 class="card-title">Information concernant le virement</h4>
+                            <h6 class="card-subtitle"></h6>
+                            <form id="example-form" action="#" class="m-t-40">
+                                <div>
+                                    <h3>Virement</h3>
+
+                                    <section>
+                                        <label for="numeroComptedebite">Numero compte debité *</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">#</span>
+                                            </div>
+                                            <input id="numeroComptedebite" name="numeroComptedebite" type="text" class="required form-control" aria-describedby="basic-addon1">
+                                        </div>
+
+                                        <br>
+                                        <label for="numeroComptecredite">Numero compte credité *</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">#</span>
+                                            </div>
+                                            <input id="numeroComptecredite" name="numeroComptecredite" type="text" class="required form-control" aria-describedby="basic-addon1">
+                                        </div>
+
+                                        <br>
+                                        <label for="montant">Montant à transferer *</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">CFA</span>
+                                            </div>
+                                            <input id="montant" name="montant" type="number" class="required form-control" aria-describedby="basic-addon1">
+                                        </div>
+                                        <br>
+                                        <p>(*) Obligatoire</p>
+                                    </section>
+
+                                    <h3>Terminer</h3>
+                                    <section>
+                                        <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required">
+                                        <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                                    </section>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End PAge Content -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Right sidebar -->
+                    <!-- ============================================================== -->
+                    <!-- .right-sidebar -->
+                    <!-- ============================================================== -->
+                    <!-- End Right sidebar -->
+                    <!-- ============================================================== -->
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Container fluid  -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- footer -->
+                <!-- ============================================================== -->
+                <footer th:replace="fragment/footer::footer"> </footer>
+                <!-- ============================================================== -->
+                <!-- End footer -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Page wrapper  -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+    <block th:insert="fragment/js::js"> </block>
+
+    <script>
+        // Basic Example with form
+        var form = $("#example-form");
+        form.validate({
+            errorPlacement: function errorPlacement(error, element) {
+                element.before(error);
+            },
+            rules: {
+                confirm: {
+                    equalTo: "#password"
+                }
+            }
+        });
+        form.children("div").steps({
+            headerTag: "h3",
+            bodyTag: "section",
+            transitionEffect: "slideLeft",
+            onStepChanging: function (event, currentIndex, newIndex) {
+                form.validate().settings.ignore = ":disabled,:hidden";
+                return form.valid();
+            },
+            onFinishing: function (event, currentIndex) {
+                form.validate().settings.ignore = ":disabled";
+                return form.valid();
+            },
+            onFinished: function (event, currentIndex) {
+                window.open("confirmvirement.html", "_self")
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html dir="ltr" xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="fragment/head::head"> </head>
+
+    <body>
+        <div class="main-wrapper">
+            <!-- ============================================================== -->
+            <!-- Preloader - style you can find in spinners.css -->
+            <!-- ============================================================== -->
+            <div class="preloader">
+                <div class="lds-ripple">
+                    <div class="lds-pos"></div>
+                    <div class="lds-pos"></div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- Preloader - style you can find in spinners.css -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Login box.scss -->
+            <!-- ============================================================== -->
+            <div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark">
+
+                
+                <!--================= DEMANDE COMPTE DEMO =============================================================-->
+                <div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog cascading-modal" role="document">
+                        <!--Content-->
+                        <div class="modal-content">
+
+                            <!--Modal cascading tabs-->
+                            <div class="modal-c-tabs">
+
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-mobile mr-1"></i>
+                                            Telephone</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#panel8" role="tab"><i class="fa fa-user-plus mr-1"></i>
+                                            Email</a>
+                                    </li>
+                                </ul>
+
+                                <!-- Tab panels -->
+                                <div class="tab-content">
+                                    <!--Panel 7-->
+                                    <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
+                                        <div class="model-head text-center">
+                                            <h6>Créer un compte demo avec votre numero de telephone</h6>
+                                        </div>
+                                        <!--Body-->
+                                        <div class="modal-body mb-1">
+                                            <div class="md-form form-sm mb-5">
+                                                <i class="fa fa-mobile prefix"></i>
+                                                <input type="number" id="modalLRInput10" class="form-control form-control-sm validate">
+                                                <label data-error="wrong" data-success="right" for="modalLRInput10">Telephone</label>
+                                            </div>
+
+                                            <div class="text-center mt-2">
+                                                <button class="btn btn-info btn-sm">S'inscrire<i class="fa fa-sign-in ml-1"></i></button>
+                                            </div>
+                                        </div>
+                                        <!--Footer-->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-md btn-outline-info waves-effect ml-auto" data-dismiss="modal">Fermer</button>
+                                        </div>
+
+                                    </div>
+                                    <!--/.Panel 7-->
+
+                                    <!--Panel 8-->
+                                    <div class="tab-pane fade" id="panel8" role="tabpanel">
+                                        <div class="model-head text-center">
+                                            <h6>Créer un compte demo avec votre Email</h6>
+                                        </div>
+
+                                        <!--Body-->
+                                        <div class="modal-body">
+                                            <div class="md-form form-sm mb-5">
+                                                <i class="fa fa-envelope prefix"></i>
+                                                <input type="email" id="modalLRInput10" class="form-control form-control-sm validate">
+                                                <label data-error="wrong" data-success="right" for="modalLRInput10">Email</label>
+                                            </div>
+
+                                            <div class="text-center form-sm mt-2">
+                                                <button class="btn btn-info  btn-sm">S'inscrire<i class="fa fa-sign-in ml-1"></i></button>
+                                            </div>
+
+                                        </div>
+                                        <!--Footer-->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-md btn-outline-info waves-effect ml-auto" data-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                    <!--/.Panel 8-->
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--/.Content-->
+                    </div>
+                </div>
+                <!--======================================== FIN DEMANDE COMPTE DEMO ===============================-->
+                <!--============================================= AFFICHAGE DEMANDE COMPTE DEMO=======================================================-->
+                <div class="text-center" style="display: none">
+                    <a href="" class="btn btn-default btn-rounded my-3" id='btnCompteDemo' data-toggle="modal" data-target="#modalLRForm">Launch
+                        Modal AFFICHAGE COMPTE DEMO</a>
+                </div>
+                <!--============================================= FIN AFFICHAGE DEMANDE COMPTE DEMO=======================================================-->
+
+                
+                <div class="auth-box bg-dark border-top border-secondary">
+                    <div id="loginform">
+                        <div class="text-center p-t-20 p-b-20">
+                            <span class="db">
+                                <img src="template_proxy_banque/admin/assets/images/logo.png" alt="logo" />
+                            </span>
+                        </div>
+                        <!-- Form -->
+                        <form class="form-horizontal m-t-20" id="loginform" action="index.html">
+                            <div class="row p-b-30">
+                                <div class="col-12">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-success text-white" id="basic-addon1">
+                                                <i class="ti-user"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-lg" placeholder="Pseudo" aria-label="Pseudo" aria-describedby="basic-addon1"
+                                               required=""/>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-warning text-white" id="basic-addon2">
+                                                <i class="ti-pencil"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-lg" placeholder="Mot de passe" aria-label="Mot de passe" aria-describedby="basic-addon1"
+                                               required=""/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row border-top border-secondary">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="p-t-20">
+                                            <button class="btn btn-info btn-sm" id="to-recover" type="button">
+                                                <i class="fa fa-lock m-r-5"></i> Mot de passe oublié?</button>
+                                            <button class="btn btn-success float-right btn-sm" type="submit">Connexion</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="recoverform">
+                        <div class="text-center">
+                            <span class="text-white">Enter your e-mail address below and we will send you instructions how to recover a password.</span>
+                        </div>
+                        <div class="row m-t-20">
+                            <!-- Form -->
+                            <form class="col-12" action="index.html">
+                                <!-- email -->
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-danger text-white" id="basic-addon1">
+                                            <i class="ti-email"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control form-control-lg" placeholder="Email Address" aria-label="Username" aria-describedby="basic-addon1"/>
+                                </div>
+                                <!-- pwd -->
+                                <div class="row m-t-20 p-t-20 border-top border-secondary">
+                                    <div class="col-12">
+                                        <a class="btn btn-success" href="#" id="to-login" name="action">Retourner à la connexion</a>
+                                        <button class="btn btn-info float-right" type="button" name="action">Recuperer</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- ============================================================== -->
+    <block th:replace="fragment/js::js"> </block>
+
+    <!-- ============================================================== -->
+    <script>
+        
+        //affichage du modal demande compte demo
+        $('#btnCompteDemo').click();
+        
+
+        $('[data-toggle="tooltip"]').tooltip();
+        $(".preloader").fadeOut();
+        // ============================================================== 
+        // Login and Recover Password 
+        // ============================================================== 
+        $('#to-recover').on("click", function () {
+            swal("Good job!", "You clicked the button!", "success");
+        });
+        $('#to-login').click(function () {
+
+            $("#recoverform").hide();
+            $("#loginform").fadeIn();
+        });
+    </script>
+
+</body>
+
+</html>

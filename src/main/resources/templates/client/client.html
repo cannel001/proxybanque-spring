@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="fragment/head::head">
+
+    </head>
+
+    <body>
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Main wrapper - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <div id="main-wrapper">
+            <!-- ============================================================== -->
+            <!-- Topbar header - style you can find in pages.scss -->
+            <!-- ============================================================== -->
+            <header th:replace="fragment/header::header">
+
+            </header>
+            <!-- ============================================================== -->
+            <!-- End Topbar header -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Left Sidebar - style you can find in sidebar.scss  -->
+            <!-- ============================================================== -->
+            <aside th:replace="fragment/slidebar::slidebar">
+
+            </aside>
+            <!-- ============================================================== -->
+            <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Page wrapper  -->
+            <!-- ============================================================== -->
+            <div class="page-wrapper">
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <div class="page-breadcrumb">
+                    <div class="row">
+                        <div class="col-12 d-flex no-block align-items-center">
+                            <h4 class="page-title">Mon Client</h4>
+                            <div class="ml-auto text-right">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item">
+                                            <a th:href="@{/}">tableau de bord</a>
+                                        </li>
+                                        <li class="breadcrumb-item active" aria-current="page">Mon client</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Container fluid  -->
+                <!-- ============================================================== -->
+                <div class="container-fluid">
+                    <!-- ============================================================== -->
+                    <!-- Start Page Content -->
+                    <!-- ============================================================== -->
+                    <div class="row">
+
+
+
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong class="card-title mb-3">Profil Client</strong>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mx-auto d-block">
+                                        <img class="uni-avatar mx-auto d-block" src="template_proxy_banque/admin/assets/images/background/img4.jpg" alt="Card image cap"
+                                             width="150px" height="150px">
+                                        <h5 class="text-sm-center mt-2 mb-1">Steven Stev</h5>
+                                        <div class="location text-sm-center">
+                                            <i class="fa fa-map-marker"></i> Abidjan, Cote d'ivoire</div>
+                                    </div>
+                                    <hr>
+                                    <div class="card-text text-sm-center">
+                                        <span class="float-left">
+                                            <strong>Telephone :</strong> 67876654
+                                            <br>
+                                            <strong>Email: </strong>test@gmail.com
+                                            <br>
+                                        </span>
+                                        <span class="float-right">
+                                            <a href="nouveauclient.html">
+                                                <button type="button" class="btn btn-outline-success">Modifier</button>
+                                            </a>
+
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="col-md-8">
+
+
+                            <!-- Tabs -->
+                            <div class="card">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#home" role="tab">
+                                            <span class="hidden-sm-up"></span>
+                                            <span class="hidden-xs-down">Compte courant</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab">
+                                            <span class="hidden-sm-up"></span>
+                                            <span class="hidden-xs-down">Compte epargne</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content tabcontent-border">
+                                    <div class="tab-pane active" id="home" role="tabpanel">
+                                        <div class="p-20">
+                                            <h5 class="card-title m-b-0">Informations concernant le compte</h5>
+                                            <div class="form-group m-t-20">
+                                                <label style="color: red">Numero compte</label>
+                                                <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input"
+                                                       disabled>
+                                            </div>
+
+                                            <div class="form-group m-t-20">
+                                                <label>Date ouverture
+
+                                                </label>
+                                                <input type="text" class="form-control date-inputmask" id="date-mask"
+                                                       placeholder="Enter Date" disabled>
+                                            </div>
+                                            <div class="form-group m-t-20">
+                                                <label style="color: red">Decouvert</label>
+                                                <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input"
+                                                       disabled>
+                                            </div>
+                                            <div class="form-group m-t-20">
+                                                <label style="color: red">Solde</label>
+                                                <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input"
+                                                       disabled>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane  p-20" id="profile" role="tabpanel">
+
+                                        <div class="p-20" id='infoepargne'>
+                                            <h5 class="card-title m-b-0">Informations concernant le compte epargne</h5>
+                                            <div class="form-group m-t-20">
+                                                <label style="color: red">Numero compte</label>
+                                                <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input"
+                                                       disabled>
+                                            </div>
+
+                                            <div class="form-group m-t-20">
+                                                <label>Date ouverture
+
+                                                </label>
+                                                <input type="text" class="form-control date-inputmask" id="date-mask"
+                                                       placeholder="Enter Date" disabled>
+                                            </div>
+                                            <div class="form-group m-t-20">
+                                                <label style="color: red">Taux</label>
+                                                <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input"
+                                                       disabled>
+                                            </div>
+
+                                            <div class="float-right">
+                                                <button type="button" id="to-liste" class="btn btn-outline-success">Retour</button>
+                                            </div>
+                                            <br>
+
+
+                                        </div>
+
+                                        <div class="p-20 text-center" id='infononepargne'>
+
+                                            <h5 class="card-title m-b-0 text-center">Veuillez ajouter un compte epargne
+                                                s'il vous plait</h5>
+
+                                            <div>
+                                                <br>
+                                                <a href="#">
+                                                    <button type="button" id="to-liste" class="btn btn-outline-success">Nouveau
+                                                        compte</button>
+                                                </a>
+
+                                            </div>
+                                            <br>
+
+
+                                        </div>
+
+
+                                        <!--liste des comptes epargnes-->
+                                        <div class="p-20" id="listeepargne">
+                                            <h5 class="card-title m-b-0">Liste des comptes epargnes</h5>
+                                            <br>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Compte</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>N° 5678678687HJG</td>
+                                                        <td>
+                                                            <button type="button" id="to-info" class="btn btn-outline-success">Voir</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>N° 5678678687HJG</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-outline-success">Voir</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>N° 5678678687HJG</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-outline-success">Voir</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>N° 5678678687HJG</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-outline-success">Voir</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>N° 5678678687HJG</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-outline-success">Voir</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <!-- row -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- card new -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title m-b-0">Total Virements</h4>
+                                </div>
+                                <ul class="list-style-none">
+                                    <li class="card-body">
+                                        <a href="resumetransaction.html" class="m-b-0 p-0">
+                                            <div class="d-flex no-block">
+                                                <i class="fa fa-check-circle w-30px m-t-5"></i>
+                                                <div>
+                                                    <span class="font-bold">150.000 FCFA</span> vers le compte
+                                                    <span class="font-bold">N°655567687</span>
+                                                    <span>Depuis 2 jours</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="card-body border-top">
+                                        <a href="#" class="m-b-0 p-0">
+                                            <div class="d-flex no-block">
+                                                <i class="fa fa-gift w-30px m-t-5"></i>
+                                                <div>
+                                                    <span class="font-bold">150.000 FCFA</span> vers le compte
+                                                    <span class="font-bold">N°655567687</span>
+                                                    <span>Depuis 2 jours</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="card-body border-top">
+                                        <a href="#" class="m-b-0 p-0">
+                                            <div class="d-flex no-block">
+                                                <i class="fa fa-plus w-30px m-t-5"></i>
+                                                <div>
+                                                    <span class="font-bold">150.000 FCFA</span> vers le compte
+                                                    <span class="font-bold">N°655567687</span>
+                                                    <span>Depuis 2 jours</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <!-- card new -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title m-b-0">Total Depots</h4>
+                                </div>
+                                <ul class="list-style-none">
+                                    <li class="card-body">
+                                        <a href="resumetransaction.html" class="m-b-0 p-0">
+                                            <div class="d-flex no-block">
+                                                <i class="fa fa-check-circle w-30px m-t-5"></i>
+                                                <div>
+                                                    <span class="font-bold">150.000 FCFA</span> recu depuis le compte
+                                                    <span class="font-bold">N°655567687</span>
+                                                    <span>Depuis 2 jours</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="card-body border-top">
+                                        <a href="#" class="m-b-0 p-0">
+                                            <div class="d-flex no-block">
+                                                <i class="fa fa-gift w-30px m-t-5"></i>
+                                                <div>
+                                                    <span class="font-bold">150.000 FCFA</span> recu depuis le compte
+                                                    <span class="font-bold">N°655567687</span>
+                                                    <span>Depuis 2 jours</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="card-body border-top">
+                                        <a href="#" class="m-b-0 p-0">
+                                            <div class="d-flex no-block">
+                                                <i class="fa fa-plus w-30px m-t-5"></i>
+                                                <div>
+                                                    <span class="font-bold">150.000 FCFA</span> recu depuis le compte
+                                                    <span class="font-bold">N°655567687</span>
+                                                    <span>Depuis 2 jours</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End PAge Content -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Right sidebar -->
+                    <!-- ============================================================== -->
+                    <!-- .right-sidebar -->
+                    <!-- ============================================================== -->
+                    <!-- End Right sidebar -->
+                    <!-- ============================================================== -->
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Container fluid  -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- footer -->
+                <!-- ============================================================== -->
+                <footer th="fragment/footer::footer">
+
+                </footer>
+                <!-- ============================================================== -->
+                <!-- End footer -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Page wrapper  -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Wrapper -->
+        <!-- ============================================================== -->
+    <block th:replace="fragment/js::js">
+
+    </block>
+
+</body>
+
+
+<script>
+    // ============================================================== 
+    // Login and Recover Password 
+    // ============================================================== 
+    $('#infoepargne').hide();
+
+    $('#listeepargne').hide();
+
+    $('#to-info').on("click", function () {
+        $("#listeepargne").slideUp();
+        $("#infoepargne").fadeIn();
+    });
+    $('#to-liste').click(function () {
+
+        $("#infoepargne").hide();
+        $("#listeepargne").fadeIn();
+    });
+</script>
+
+</html>
