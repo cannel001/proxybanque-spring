@@ -35,6 +35,7 @@ public class ClientService implements IClientService {
 
     }
 
+    @Override
     public Client create(Client t) {
 
         if (t != null) {
@@ -47,12 +48,14 @@ public class ClientService implements IClientService {
 
     }
 
+    @Override
     public List<Client> readAll() {
 
         return clientRepository.findByEnabledTrue();
 
     }
 
+    @Override
     public Client readOne(Long pk) {
 
         if (pk > 0) {
@@ -62,7 +65,7 @@ public class ClientService implements IClientService {
 
     }
 
-    
+    @Override
     public Client update(Client t) {
 
         if (t != null) {
@@ -73,7 +76,7 @@ public class ClientService implements IClientService {
 
     }
 
-    
+    @Override
     public Boolean delete(Client t) {
 
         if (t != null) {

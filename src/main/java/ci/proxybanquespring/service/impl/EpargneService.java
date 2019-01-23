@@ -58,20 +58,20 @@ public class EpargneService implements IEpargneService{
     }
 
     @Override
-    public int countByConseiller(Long idConseiller) {
+    public int countByConseiller(String email) {
 
         int cpt=0;
 
-        if (idConseiller > 0) {
+        if (!"".equals(email)) {
             
             //recuperation de la liste de tous les clients
-            List<Client> listClient=clientService.readAllByConseiller(conseillerService.readOne(idConseiller));
+            List<Client> listClient=clientService.readAllByConseiller(conseillerService.readOne(email));
             
             //compter le nombre des comptes pour chaque clients si la liste des clients est different de null
-            if(listClient!=null){
+            if(!listClient.isEmpty()){
                 
                 for (Client client : listClient) {
-                    if(readAllParClient(client.getId())!=null){
+                    if(!readAllParClient(client.getId()).isEmpty()){
                         cpt+=readAllParClient(client.getId()).size();
                     }
                 }
@@ -82,7 +82,7 @@ public class EpargneService implements IEpargneService{
 
     }
 
-    
+    @Override
     public Epargne create(Epargne t) {
 
         if (t != null) {
@@ -95,7 +95,7 @@ public class EpargneService implements IEpargneService{
 
     }
 
-    
+    @Override
     public List<Epargne> readAll() {
 
         return epargneRepository.findByEnabledTrue();
@@ -112,7 +112,7 @@ public class EpargneService implements IEpargneService{
 
     }
 
-    
+    @Override
     public Epargne update(Epargne t) {
 
         if (t != null) {
@@ -123,7 +123,7 @@ public class EpargneService implements IEpargneService{
 
     }
 
-    
+    @Override
     public Boolean delete(Epargne t) {
 
         if (t != null) {

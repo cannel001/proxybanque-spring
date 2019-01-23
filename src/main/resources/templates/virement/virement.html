@@ -62,6 +62,11 @@
                 <!-- Container fluid  -->
                 <!-- ============================================================== -->
                 <div class="container-fluid">
+
+                    <!--***************** LES MESSAGES D'ALERTS ***************************-->
+                    <block th:replace="fragment/messagealert::alert"></block>
+                    <!--****************** FIN ALERT ERREUR ******************-->
+
                     <!-- ============================================================== -->
                     <!-- Start Page Content -->
                     <!-- ============================================================== -->
@@ -69,7 +74,7 @@
                         <div class="card-body wizard-content">
                             <h4 class="card-title">Information concernant le virement</h4>
                             <h6 class="card-subtitle"></h6>
-                            <form id="example-form" action="#" class="m-t-40">
+                            <form id="example-form" th:action="@{/virement/save}" method="post" class="m-t-40">
                                 <div>
                                     <h3>Virement</h3>
 
@@ -79,16 +84,16 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="basic-addon1">#</span>
                                             </div>
-                                            <input id="numeroComptedebite" name="numeroComptedebite" type="text" class="required form-control" aria-describedby="basic-addon1">
+                                            <input id="cptDebiter" name="cptDebiter" type="text" class="required form-control" aria-describedby="basic-addon1">
                                         </div>
 
                                         <br>
-                                        <label for="numeroComptecredite">Numero compte credité *</label>
+                                        <label for="cptCrediter">Numero compte credité *</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="basic-addon1">#</span>
                                             </div>
-                                            <input id="numeroComptecredite" name="numeroComptecredite" type="text" class="required form-control" aria-describedby="basic-addon1">
+                                            <input id="numeroComptecredite" name="cptCrediter" type="text" class="required form-control" aria-describedby="basic-addon1">
                                         </div>
 
                                         <br>
@@ -106,9 +111,10 @@
                                     <h3>Terminer</h3>
                                     <section>
                                         <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required">
-                                        <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                                        <label for="acceptTerms">Je suis d'accord avec les informations entrées</label>
                                     </section>
                                 </div>
+                                <input type="submit" style="display: none" id="btnSave"/>
                             </form>
                         </div>
                     </div>
@@ -167,11 +173,15 @@
                 return form.valid();
             },
             onFinished: function (event, currentIndex) {
-                window.open("confirmvirement.html", "_self")
+                $("#btnSave").click();
             }
         });
 
     </script>
+    
+    <!--*********************** DEBUT ALERT JS ****************************-->
+    <block th:replace="fragment/alertjs::alert"></block>
+    <!--*********************** FIN ALERT JS ****************************-->
 
 </body>
 

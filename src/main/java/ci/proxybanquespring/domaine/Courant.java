@@ -22,7 +22,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @DiscriminatorValue(value = "compte_courant")
 public class Courant extends Compte implements Serializable{
     
@@ -48,6 +47,11 @@ public class Courant extends Compte implements Serializable{
         super(dateOuverture, solde, client);
         this.montantInitial = montantInitial;
     }
+
+    public Courant() {
+    }
+    
+    
 
     
     

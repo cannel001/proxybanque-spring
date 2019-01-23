@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
     <head th:replace="fragment/head::head">
 
@@ -62,7 +62,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card-body">
+                                <div th:if="not ${listeClients}" class="card-body">
+                                    <p>La liste des clients est vide</p>
+                                </div>
+                                <div th:if="${listeClients}" class="card-body">
                                     <div class="d-md-flex align-items-center">
                                         <div>
                                             <h4 class="card-title">Liste des clients</h4>
@@ -80,41 +83,24 @@
                                                             <th>Email</th>
                                                             <th>Adresse</th>
                                                             <th>Telephone</th>
-                                                            <th></th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>Tiger Nixon</td>
-                                                            <td>System Architect</td>
-                                                            <td>Edinburgh</td>
-                                                            <td>61</td>
-                                                            <td>2011/04/25</td>
+                                                        <tr th:each="client :${listeClients}">
+                                                            <td th:text="${client.nom}">nom</td>
+                                                            <td th:text="${client.prenom}">prenom</td>
+                                                            <td th:text="${client.email}">email</td>
+                                                            <td th:text="${client.adresse}">adresse</td>
+                                                            <td th:text="${client.tel}">tel</td>
                                                             <td>
                                                                 <div class="btn-group">
-                                                                    <button type="button" class="btn btn-success dropdown-toggle"
+                                                                    <button type="button" class="btn btn-primary dropdown-toggle btn-sm"
                                                                             data-toggle="dropdown" aria-haspopup="true"
                                                                             aria-expanded="false">Action</button>
                                                                     <div class="dropdown-menu">
-                                                                        <a class="dropdown-item" href="#">Archiver</a>
-                                                                        <a class="dropdown-item" th:href="@{/client}">Voir</a>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        <tr>
-                                                            <td>Tiger Nixon</td>
-                                                            <td>System Architect</td>
-                                                            <td>Edinburgh</td>
-                                                            <td>61</td>
-                                                            <td>2011/04/25</td>
-                                                            <td>
-                                                                <div class="btn-group">
-                                                                    <button type="button" class="btn btn-success dropdown-toggle"
-                                                                            data-toggle="dropdown" aria-haspopup="true"
-                                                                            aria-expanded="false">Action</button>
-                                                                    <div class="dropdown-menu">
-                                                                        <a class="dropdown-item" href="#">Archiver</a>
-                                                                        <a class="dropdown-item" th:href="@{/client}">Voir</a>
+                                                                        <a class="dropdown-item" href="#">Supprimer</a>
+                                                                        <a class="dropdown-item" th:href="${'/client/profile/'+client.id}">Voir</a>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -122,10 +108,6 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-
-
-
-
 
                                         </div>
 

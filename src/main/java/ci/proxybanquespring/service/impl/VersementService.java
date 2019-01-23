@@ -35,37 +35,13 @@ public class VersementService implements IVersementService {
     private CourantService courantService;
 
     @Override
-    public Long generateNumTransc() {
+    public List<Versement> readAllVersementByClient(Long idClient) {
 
-        Long newNum = Long.parseLong((String) numeroTransactionService.generate());
-
-        while (versementRepository.findByNumOperationAndEnabledTrue(newNum) != null) {
-            newNum = Long.parseLong((String) numeroTransactionService.generate());
-        }
-
-        return newNum;
-
-    }
-
-    @Override
-    public List<Versement> readAllVersementPrClient(Long idClient) {
-
-//        if (idClient > 0) {
-//            Client client = clientService.readOne(idClient);
-//            return versementRepository.findByClientAndStatut(client, true);
-//        }
-        return null;
-
-    }
-
-    @Override
-    public String typeCompte(String numeroCpt) {
-
-        if (!"".equals(numeroCpt)) {
-            if (courantService.readOne(numeroCpt) != null) {
-                return "Courant";
+        if (idClient > 0) {
+            Client client = clientService.readOne(idClient);
+            if(client!=null){
+                return versementRepository.findByCompteClientAndEnabledTrue(client);
             }
-            return "Epargne";
         }
         return null;
 
@@ -82,7 +58,7 @@ public class VersementService implements IVersementService {
 
     }
 
-    
+    @Override
     public Versement create(Versement t) {
 
         if (t != null) {
@@ -95,14 +71,14 @@ public class VersementService implements IVersementService {
 
     }
 
-    
+    @Override
     public List<Versement> readAll() {
 
         return versementRepository.findByEnabledTrue();
 
     }
 
-    
+    @Override
     public Versement readOne(Long pk) {
 
         if (pk > 0) {
@@ -123,7 +99,7 @@ public class VersementService implements IVersementService {
 
     }
 
-    
+    @Override
     public Boolean delete(Versement t) {
 
         if (t != null) {

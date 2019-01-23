@@ -58,20 +58,20 @@ public class CourantService implements ICourantService {
     }
 
     @Override
-    public int countByConseiller(Long idConseiller) {
+    public int countByConseiller(String email) {
         
         int cpt=0;
 
-        if (idConseiller > 0) {
+        if (!"".equals(email)) {
             
             //recuperation de la liste de tous les clients
-            List<Client> listClient=clientService.readAllByConseiller(conseillerService.readOne(idConseiller));
+            List<Client> listClient=clientService.readAllByConseiller(conseillerService.readOne(email));
             
             //compter le nombre des comptes pour chaque clients si la liste des clients est different de null
-            if(listClient!=null){
+            if(!listClient.isEmpty()){
                 
                 for (Client client : listClient) {
-                    if(readAllParClient(client.getId())!=null){
+                    if(!readAllParClient(client.getId()).isEmpty()){
                         cpt+=readAllParClient(client.getId()).size();
                     }
                 }
@@ -82,7 +82,7 @@ public class CourantService implements ICourantService {
 
     }
 
-    
+    @Override
     public Courant create(Courant t) {
 
         if (t != null) {
@@ -95,14 +95,14 @@ public class CourantService implements ICourantService {
 
     }
 
-    
+    @Override
     public List<Courant> readAll() {
 
         return courantRepository.findByEnabledTrue();
 
     }
 
-    
+    @Override
     public Courant readOne(String pk) {
 
         if (!"".equals(pk)) {
@@ -112,7 +112,7 @@ public class CourantService implements ICourantService {
 
     }
 
-    
+    @Override
     public Courant update(Courant t) {
 
         if (t != null) {
@@ -123,7 +123,7 @@ public class CourantService implements ICourantService {
 
     }
 
-    
+    @Override
     public Boolean delete(Courant t) {
 
         if (t != null) {

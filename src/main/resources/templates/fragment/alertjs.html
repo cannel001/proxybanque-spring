@@ -1,0 +1,23 @@
+<block th:fragment="alert">
+    <script>
+
+        console.log("passage****************** 1");
+
+        //methode permettant d'activer la notification
+        let messageSuccess = "" + $("#txfMessageSuccess").val();
+        let messageFailure = "" + $("#txfMessageFailure").val();
+
+        console.log(messageFailure);
+
+        //traitement permettant d'afficher une alerte
+        if (messageSuccess.length>10) {
+            console.log("**************** passage avec " + messageSuccess);
+            toastr.success(messageSuccess,'Felicitations!');
+
+        } else if (messageFailure.length>10) {
+            console.log("**************** passage avec " + messageFailure);
+            toastr.error(messageFailure,'Oups!');
+        }
+
+    </script>
+</block>

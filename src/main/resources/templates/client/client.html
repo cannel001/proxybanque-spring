@@ -20,29 +20,19 @@
         <!-- ============================================================== -->
         <div id="main-wrapper">
             <!-- ============================================================== -->
-            <!-- Topbar header - style you can find in pages.scss -->
-            <!-- ============================================================== -->
-            <header th:replace="fragment/header::header">
 
-            </header>
             <!-- ============================================================== -->
-            <!-- End Topbar header -->
+            <header th:replace="fragment/header::header"> </header>
             <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Left Sidebar - style you can find in sidebar.scss  -->
-            <!-- ============================================================== -->
-            <aside th:replace="fragment/slidebar::slidebar">
 
-            </aside>
             <!-- ============================================================== -->
-            <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+            <aside th:replace="fragment/slidebar::slidebar">  </aside>
             <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Page wrapper  -->
+
             <!-- ============================================================== -->
             <div class="page-wrapper">
                 <!-- ============================================================== -->
-                <!-- Bread crumb and right sidebar toggle -->
+
                 <!-- ============================================================== -->
                 <div class="page-breadcrumb">
                     <div class="row">
@@ -68,6 +58,11 @@
                 <!-- Container fluid  -->
                 <!-- ============================================================== -->
                 <div class="container-fluid">
+
+                    <!--***************** LES MESSAGES D'ALERTS ***************************-->
+                    <block th:replace="fragment/messagealert::alert"></block>
+                    <!--****************** FIN ALERT ERREUR ******************-->
+
                     <!-- ============================================================== -->
                     <!-- Start Page Content -->
                     <!-- ============================================================== -->
@@ -82,37 +77,34 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="mx-auto d-block">
-                                        <img class="uni-avatar mx-auto d-block" src="template_proxy_banque/admin/assets/images/background/img4.jpg" alt="Card image cap"
+                                        <img class="uni-avatar mx-auto d-block" th:src="@{https://res.cloudinary.com/dtpt8vqjj/image/upload/v1545155615/default-avatar.png}" alt="Card image cap"
                                              width="150px" height="150px">
-                                        <h5 class="text-sm-center mt-2 mb-1">Steven Stev</h5>
+                                        <h5 class="text-sm-center mt-2 mb-1">
+                                            <span th:text="${courant.client.prenom}"></span>
+                                            <span th:text="${courant.client.nom}"></span>
+                                        </h5>
                                         <div class="location text-sm-center">
                                             <i class="fa fa-map-marker"></i> Abidjan, Cote d'ivoire</div>
                                     </div>
                                     <hr>
                                     <div class="card-text text-sm-center">
                                         <span class="float-left">
-                                            <strong>Telephone :</strong> 67876654
+                                            <strong>Telephone :</strong> <span th:text="${courant.client.tel}"></span>
                                             <br>
-                                            <strong>Email: </strong>test@gmail.com
+                                            <strong>Email: </strong> <span th:text="${courant.client.email}"></span>
                                             <br>
                                         </span>
                                         <span class="float-right">
                                             <a href="nouveauclient.html">
                                                 <button type="button" class="btn btn-outline-success">Modifier</button>
                                             </a>
-
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-
-
-
-
                         <div class="col-md-8">
-
 
                             <!-- Tabs -->
                             <div class="card">
@@ -138,7 +130,7 @@
                                             <h5 class="card-title m-b-0">Informations concernant le compte</h5>
                                             <div class="form-group m-t-20">
                                                 <label style="color: red">Numero compte</label>
-                                                <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input"
+                                                <input type="text" th:value="${courant.numCpt}"  id="disabledTextInput" class="form-control" placeholder="null"
                                                        disabled>
                                             </div>
 
@@ -146,17 +138,17 @@
                                                 <label>Date ouverture
 
                                                 </label>
-                                                <input type="text" class="form-control date-inputmask" id="date-mask"
+                                                <input th:value="${#calendars.format(courant.dateOuverture,'dd/MM/yyyy')}" type="text" class="form-control date-inputmask" id="date-mask"
                                                        placeholder="Enter Date" disabled>
                                             </div>
                                             <div class="form-group m-t-20">
                                                 <label style="color: red">Decouvert</label>
-                                                <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input"
+                                                <input th:value="${courant.montantInitial}" type="text" id="disabledTextInput" class="form-control" placeholder="null"
                                                        disabled>
                                             </div>
                                             <div class="form-group m-t-20">
                                                 <label style="color: red">Solde</label>
-                                                <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input"
+                                                <input th:value="${courant.solde}" type="text" id="disabledTextInput" class="form-control" placeholder="null"
                                                        disabled>
                                             </div>
 
@@ -194,14 +186,14 @@
 
                                         </div>
 
-                                        <div class="p-20 text-center" id='infononepargne'>
+                                        <div th:if="!${epargnes}" class="p-20 text-center">
 
                                             <h5 class="card-title m-b-0 text-center">Veuillez ajouter un compte epargne
                                                 s'il vous plait</h5>
 
                                             <div>
                                                 <br>
-                                                <a href="#">
+                                                <a th:href="${'/epargne/'+courant.client.id}">
                                                     <button type="button" id="to-liste" class="btn btn-outline-success">Nouveau
                                                         compte</button>
                                                 </a>
@@ -214,7 +206,7 @@
 
 
                                         <!--liste des comptes epargnes-->
-                                        <div class="p-20" id="listeepargne">
+                                        <div th:if="${epargnes}" class="p-20">
                                             <h5 class="card-title m-b-0">Liste des comptes epargnes</h5>
                                             <br>
                                             <table class="table">
@@ -225,153 +217,176 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>N° 5678678687HJG</td>
+                                                    <tr th:each="epargne :${epargnes}">
+                                                        <td th:text="${epargne.numCpt}">N° 5678678687HJG</td>
                                                         <td>
                                                             <button type="button" id="to-info" class="btn btn-outline-success">Voir</button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>N° 5678678687HJG</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-outline-success">Voir</button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>N° 5678678687HJG</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-outline-success">Voir</button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>N° 5678678687HJG</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-outline-success">Voir</button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>N° 5678678687HJG</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-outline-success">Voir</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
 
-
-
-
                                     </div>
                                 </div>
                             </div>
-
-
-
-
-
-
-
 
                         </div>
                     </div>
                     <!-- row -->
                     <div class="row">
-                        <div class="col-md-6">
+
+                        <!--*****************************   AFFICHAGE DES DEPOTS RECU ********************************-->
+                        <div class="col-md-4">
                             <!-- card new -->
+
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title m-b-0">Total Virements</h4>
+                                    <h4 class="card-title m-b-0">Mes depots</h4>
                                 </div>
-                                <ul class="list-style-none">
-                                    <li class="card-body">
-                                        <a href="resumetransaction.html" class="m-b-0 p-0">
-                                            <div class="d-flex no-block">
-                                                <i class="fa fa-check-circle w-30px m-t-5"></i>
-                                                <div>
-                                                    <span class="font-bold">150.000 FCFA</span> vers le compte
-                                                    <span class="font-bold">N°655567687</span>
-                                                    <span>Depuis 2 jours</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
+                                <ul th:if="${versements}" th:each="versement :${versements}" class="list-style-none">
                                     <li class="card-body border-top">
                                         <a href="#" class="m-b-0 p-0">
                                             <div class="d-flex no-block">
-                                                <i class="fa fa-gift w-30px m-t-5"></i>
+                                                <i class="fa fa-check-circle w-30px m-t-5"></i>
                                                 <div>
-                                                    <span class="font-bold">150.000 FCFA</span> vers le compte
-                                                    <span class="font-bold">N°655567687</span>
-                                                    <span>Depuis 2 jours</span>
+                                                    <span th:text="${versement.montant}" class="font-bold">montant</span>
+                                                    <span> FCFA</span> reçu le 
+                                                    <span th:text="${#calendars.format(versement.dateCreation,'dd/MM/yyyy')}"></span>
+                                                    <span> à </span>
+                                                    <span th:text="${#calendars.format(versement.dateCreation,'HH:mm')}"></span>
+                                                    <span> par </span>
+                                                    <span th:text="${versement.remettant}"></span>
                                                 </div>
                                             </div>
                                         </a>
                                     </li>
+                                </ul>
+                                <ul th:if="!${versements}" class="list-style-none">
                                     <li class="card-body border-top">
                                         <a href="#" class="m-b-0 p-0">
                                             <div class="d-flex no-block">
                                                 <i class="fa fa-plus w-30px m-t-5"></i>
                                                 <div>
-                                                    <span class="font-bold">150.000 FCFA</span> vers le compte
-                                                    <span class="font-bold">N°655567687</span>
-                                                    <span>Depuis 2 jours</span>
+                                                    <p>Aucun depot reçu</p>
                                                 </div>
                                             </div>
                                         </a>
                                     </li>
-
                                 </ul>
                             </div>
                         </div>
+                        <!--*****************************   FIN AFFICHAGE DES DEPOTS RECU ********************************-->
 
-                        <div class="col-md-6">
+                        
+                        <!--*****************************   AFFICHAGE DES VIREMENTS RECU ********************************-->
+                        <div class="col-md-4">
                             <!-- card new -->
+
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title m-b-0">Total Depots</h4>
+                                    <h4 class="card-title m-b-0">Mes virements</h4>
                                 </div>
-                                <ul class="list-style-none">
-                                    <li class="card-body">
-                                        <a href="resumetransaction.html" class="m-b-0 p-0">
-                                            <div class="d-flex no-block">
-                                                <i class="fa fa-check-circle w-30px m-t-5"></i>
-                                                <div>
-                                                    <span class="font-bold">150.000 FCFA</span> recu depuis le compte
-                                                    <span class="font-bold">N°655567687</span>
-                                                    <span>Depuis 2 jours</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
+                                <ul th:if="${virementsrecu}" th:each="virement :${virementsrecu}" class="list-style-none">
                                     <li class="card-body border-top">
                                         <a href="#" class="m-b-0 p-0">
                                             <div class="d-flex no-block">
-                                                <i class="fa fa-gift w-30px m-t-5"></i>
+                                                <i class="fa fa-check-circle w-30px m-t-5"></i>
                                                 <div>
-                                                    <span class="font-bold">150.000 FCFA</span> recu depuis le compte
-                                                    <span class="font-bold">N°655567687</span>
-                                                    <span>Depuis 2 jours</span>
+                                                    <span th:text="${virement.montant}" class="font-bold">montant</span>
+                                                    <span> FCFA</span> reçu le 
+                                                    <span th:text="${#calendars.format(virement.dateCreation,'dd/MM/yyyy')}"></span>
+                                                    <span> à </span>
+                                                    <span th:text="${#calendars.format(virement.dateCreation,'HH:mm')}"></span>
                                                 </div>
                                             </div>
                                         </a>
                                     </li>
+                                </ul>
+                                <ul th:if="${virementsenvoye}" th:each="virement :${virementsenvoye}" class="list-style-none">
+                                    <li class="card-body border-top">
+                                        <a href="#" class="m-b-0 p-0">
+                                            <div class="d-flex no-block">
+                                                <i class="fa fa-check-circle w-30px m-t-5"></i>
+                                                <div>
+                                                    <span th:text="${virement.montant}" class="font-bold">montant</span>
+                                                    <span> FCFA</span> envoyé le  
+                                                    <span th:text="${#calendars.format(virement.dateCreation,'dd/MM/yyyy')}"></span>
+                                                    <span> à </span>
+                                                    <span th:text="${#calendars.format(virement.dateCreation,'HH:mm')}"></span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul th:if="!${virementsrecu}" class="list-style-none">
                                     <li class="card-body border-top">
                                         <a href="#" class="m-b-0 p-0">
                                             <div class="d-flex no-block">
                                                 <i class="fa fa-plus w-30px m-t-5"></i>
                                                 <div>
-                                                    <span class="font-bold">150.000 FCFA</span> recu depuis le compte
-                                                    <span class="font-bold">N°655567687</span>
-                                                    <span>Depuis 2 jours</span>
+                                                    <p>Aucun virement reçu</p>
                                                 </div>
                                             </div>
                                         </a>
                                     </li>
-
+                                </ul>
+                                 <ul th:if="!${virementsenvoye}" class="list-style-none">
+                                    <li class="card-body border-top">
+                                        <a href="#" class="m-b-0 p-0">
+                                            <div class="d-flex no-block">
+                                                <i class="fa fa-plus w-30px m-t-5"></i>
+                                                <div>
+                                                    <p>Aucun virement envoyé</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
+                        <!--*****************************   FIN AFFICHAGE DES DEPOTS RECU ********************************-->
+                        
+
+                        <!--*****************************   AFFICHAGE DES RETRAITS EFFECTUES ********************************-->
+                        <div class="col-md-4">
+                            <!-- card new -->
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title m-b-0">Mes retraits</h4>
+                                </div>
+                                <ul th:if="${retraits}" th:each="retrait :${retraits}" class="list-style-none">
+                                    <li class="card-body border-top">
+                                        <a href="#" class="m-b-0 p-0">
+                                            <div class="d-flex no-block">
+                                                <i class="fa fa-check-circle w-30px m-t-5"></i>
+                                                <div>
+                                                    <span th:text="${retrait.montant}" class="font-bold">montant</span>
+                                                    <span> FCFA retiré le </span>
+                                                    <span th:text="${#calendars.format(retrait.dateCreation,'dd/MM/yyyy')}"></span>
+                                                    <span> à </span>
+                                                    <span th:text="${#calendars.format(retrait.dateCreation,'HH:mm')}"></span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul th:if="!${retraits}" class="list-style-none">
+                                    <li class="card-body border-top">
+                                        <a href="#" class="m-b-0 p-0">
+                                            <div class="d-flex no-block">
+                                                <i class="fa fa-plus w-30px m-t-5"></i>
+                                                <div>
+                                                    <p>Aucun retrait effectué</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--*****************************   FIN AFFICHAGE DES DEPOTS RECU ********************************-->
 
                     </div>
                     <!-- ============================================================== -->
@@ -430,5 +445,9 @@
         $("#listeepargne").fadeIn();
     });
 </script>
+
+<!--*********************** DEBUT ALERT JS ****************************-->
+<block th:replace="fragment/alertjs::alert"></block>
+<!--*********************** FIN ALERT JS ****************************-->
 
 </html>

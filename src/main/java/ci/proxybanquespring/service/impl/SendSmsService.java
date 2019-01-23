@@ -5,6 +5,7 @@
  */
 package ci.proxybanquespring.service.impl;
 
+import ci.proxybanquespring.service.ISendSmsService;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,14 +18,17 @@ import java.net.URL;
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author HP
  */
-public class SendSmsService {
+@Service
+public class SendSmsService implements ISendSmsService{
 
-    public static Boolean sendMySms(String numero, String message) {
+    @Override
+    public Boolean sendMySms(String numero, String message) {
 
         try {
 

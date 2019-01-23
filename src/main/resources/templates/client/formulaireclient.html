@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
     <head th:replace="fragment/head::head"> </head>
 
@@ -69,28 +69,28 @@
                         <div class="card-body wizard-content">
                             <h4 class="card-title">Information concernant le client</h4>
                             <h6 class="card-subtitle"></h6>
-                            <form id="example-form" action="#" class="m-t-40">
+                            <form th:object="${courant}" id="example-form" th:action="@{/client/save}" method="post" class="m-t-40">
                                 <div>
                                     <h3>Profile</h3>
                                     <section>
                                         <label for="name">Nom *</label>
-                                        <input id="name" name="name" type="text" class="required form-control">
+                                        <input id="name" th:field="*{client.nom}" name="name" type="text" class="required form-control">
                                         <label for="surname">Prenom(s) *</label>
-                                        <input id="surname" name="surname" type="text" class="required form-control">
+                                        <input id="surname" th:field="*{client.prenom}" name="surname" type="text" class="required form-control">
                                         <label for="email">Email *</label>
-                                        <input id="email" name="email" type="email" class="required email form-control">
+                                        <input id="email" th:field="*{client.email}" name="email" type="email" class="required email form-control">
                                         <label for="address">Adresse</label>
-                                        <input id="address" name="address" type="text" class=" form-control">
+                                        <input id="address" name="address" th:field="*{client.adresse}" type="text" class=" form-control">
                                         <label for="address">Telephone</label>
-                                        <input id="address" name="address" type="number" class=" form-control">
+                                        <input id="address" name="tel" type="number" th:field="*{client.tel}" class=" form-control">
                                         <p>(*) Obligatoire</p>
                                     </section>
                                     <h3>Nouveau compte courant</h3>
                                     <section>
                                         <label for="name">Date d'ouverture *</label>
-                                        <input id="name" name="name" type="date" class="required form-control">
+                                        <input id="name" name="name" th:field="*{dateOuverture}" type="date" class="required form-control">
                                         <label for="surname">Montant initial *</label>
-                                        <input id="surname" name="surname" type="number" class="required form-control">
+                                        <input id="surname" name="surname" th:field="*{montantInitial}" type="number" class="required form-control">
                                         <p>(*) Obligatoire</p>
                                     </section>
                                     <h3>Terminer</h3>
@@ -99,6 +99,7 @@
                                         <label for="acceptTerms">Je suis d'accord avec les informations entrées</label>
                                     </section>
                                 </div>
+                                <button type="submit" style="display: none" id="btnValider">valider</button>
                             </form>
                         </div>
                     </div>
@@ -159,7 +160,7 @@
                 return form.valid();
             },
             onFinished: function (event, currentIndex) {
-                alert("Submitted!");
+                $("#btnValider").click();
             }
         });
 

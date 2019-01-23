@@ -6,6 +6,7 @@
 package ci.proxybanquespring.domaine;
 
 import java.util.Date;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import lombok.NoArgsConstructor;
 
@@ -15,18 +16,11 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @NoArgsConstructor
-public class Retraits extends Operation{
-    
-    private String caisse;
-    
-    private String agence;
+@DiscriminatorValue(value = "operation_retrait")
+public class Retraits extends Operation {
 
     public Retraits(String caisse, String agence, Long numOperation, Date dateOperation, Double montant, String note, Double ancienSolde, Double nouveauSolde, String devise, Long idUser, Compte compte) {
         super(numOperation, dateOperation, montant, note, ancienSolde, nouveauSolde, devise, idUser, compte);
-        this.caisse = caisse;
-        this.agence = agence;
     }
-    
-    
-    
+
 }

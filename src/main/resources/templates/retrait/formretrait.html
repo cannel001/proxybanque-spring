@@ -57,7 +57,6 @@
                 <!-- ============================================================== -->
                 <div class="container-fluid">
 
-
                     <!--***************** LES MESSAGES D'ALERTS ***************************-->
                     <block th:replace="fragment/messagealert::alert"></block>
                     <!--****************** FIN ALERT ERREUR ******************-->
@@ -67,9 +66,9 @@
                     <!-- ============================================================== -->
                     <div class="card">
                         <div class="card-body wizard-content">
-                            <h4 class="card-title">Information concernant le versement</h4>
+                            <h4 class="card-title">Information concernant le retrait</h4>
                             <h6 class="card-subtitle"></h6>
-                            <form th:object="${versement}" id="example-form" th:action="@{/versement/save}" class="m-t-40" method="post">
+                            <form th:object="${retrait}" id="example-form" th:action="@{/retrait/save}" class="m-t-40" method="post">
                                 <div>
                                     <h3>Versement</h3>
                                     <section>
@@ -80,20 +79,7 @@
                                             </div>
                                             <input id="numCpt" name="numCpt" type="text" class="required form-control" aria-describedby="basic-addon1">
                                         </div>
-                                        <label for="remettant">Remettant *</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">#</span>
-                                            </div>
-                                            <input id="remettant" th:field="*{remettant}" name="remettant" type="text" class="required form-control" aria-describedby="basic-addon1">
-                                        </div>
-                                        <label for="telRemettant">Tel remettant *</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">#</span>
-                                            </div>
-                                            <input id="telRemettant" th:field="*{telRemettant}" name="telRemettant" type="text" class="required form-control" aria-describedby="basic-addon1">
-                                        </div>
+
                                         <br>
                                         <label for="montant">Montant *</label>
                                         <div class="input-group">
@@ -102,13 +88,7 @@
                                             </div>
                                             <input id="montant" name="montant" th:field="*{montant}" type="number" class="required form-control" aria-describedby="basic-addon1">
                                         </div>
-                                        <label for="timbre">Timbre</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">CFA</span>
-                                            </div>
-                                            <input id="timbre" name="timbre" th:field="*{timbre}" type="number" class="form-control" aria-describedby="basic-addon1">
-                                        </div>
+
                                         <label for="agence">Agence *</label>
                                         <div class="input-group">
                                             <input id="agence" name="agence" th:field="*{agence}" type="text" class="required form-control" aria-describedby="basic-addon1">
@@ -191,13 +171,12 @@
             }
         });
 
-
     </script>
-
+    
     <!--*********************** DEBUT ALERT JS ****************************-->
     <block th:replace="fragment/alertjs::alert"></block>
     <!--*********************** FIN ALERT JS ****************************-->
-
+    
 </body>
 
 </html>

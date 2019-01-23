@@ -1,0 +1,12 @@
+<block th:fragment="alert">
+    <!--***************** LES MESSAGES D'ALERTS ***************************-->
+    <!--****************** OPERATION REUSSI **********-->
+    <div th:if="${success}">
+        <input type="text" style="display: none" id="txfMessageSuccess" th:value="${success}"/>
+    </div>
+    <!--****************** OPERATIONS ECHOUEES **********-->
+    <div th:if="${failure}">
+        <input type="text" style="display: none" id="txfMessageFailure" th:value="${failure}"/>
+    </div>
+
+</block>

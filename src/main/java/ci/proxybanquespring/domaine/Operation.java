@@ -34,7 +34,6 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Operation")
 @Table(name = "operation")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Inheritance(strategy =InheritanceType.SINGLE_TABLE)
 public abstract class  Operation implements Serializable{
@@ -58,6 +57,12 @@ public abstract class  Operation implements Serializable{
     
     private String devise;
     
+    @Column(name = "agence")
+    private String agence;
+    
+    @Column(name = "caisse")
+    private String caisse;
+    
     @NotNull
     private Boolean enabled;
     
@@ -69,7 +74,6 @@ public abstract class  Operation implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateUpdate;
     
-    @NotNull
     private Long idUser;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -92,6 +96,11 @@ public abstract class  Operation implements Serializable{
         this.idUser = idUser;
         this.compte = compte;
     }
+
+    public Operation() {
+    }
+    
+    
     
     
 }

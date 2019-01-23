@@ -5,10 +5,24 @@
  */
 package ci.proxybanquespring.service;
 
+import ci.proxybanquespring.domaine.Billetage;
+import java.util.Date;
+import java.util.List;
+
 /**
  *
  * @author willi
  */
 public interface IBilletageService {
-    
+
+    public Billetage create(Billetage t);
+
+    public List<Billetage> readAll();
+
+    public Billetage readOne(Long pk);
+
+    public Billetage update(Billetage t);
+
+    public Boolean delete(Billetage t);
+
 }

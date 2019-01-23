@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +20,6 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Data
-@NoArgsConstructor
 @DiscriminatorValue(value="operation_virement")
 public class Virement extends Operation implements Serializable {
     
@@ -34,6 +34,10 @@ public class Virement extends Operation implements Serializable {
         super(numOperation, dateOperation, montant, note, ancienSolde, nouveauSolde, devise, idUser, compte);
         this.typVirement = typVirement;
         this.reference = reference;
+    }
+    
+    public Virement(){
+        
     }
     
     

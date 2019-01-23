@@ -25,6 +25,7 @@ public class BilletageService implements IBilletageService{
     @Autowired
     private BilletageRepository billetageRepository;
     
+    @Override
      public Billetage create(Billetage t) {
 
         if (t != null) {
@@ -37,10 +38,12 @@ public class BilletageService implements IBilletageService{
 
     }
 
+     @Override
     public List<Billetage> readAll() {
         return billetageRepository.findByEnabledTrue();
     }
 
+    @Override
     public Billetage readOne(Long pk) {
 
         if (pk > 0) {
@@ -50,7 +53,7 @@ public class BilletageService implements IBilletageService{
 
     }
 
-    
+    @Override
     public Billetage update(Billetage t) {
 
         if (t != null) {
@@ -61,7 +64,7 @@ public class BilletageService implements IBilletageService{
 
     }
 
-    
+    @Override
     public Boolean delete(Billetage t) {
 
         if (t != null) {

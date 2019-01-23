@@ -7,6 +7,7 @@ package ci.proxybanquespring.service;
 
 import ci.proxybanquespring.domaine.Client;
 import ci.proxybanquespring.domaine.Conseiller;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,5 +17,15 @@ import java.util.List;
 public interface IClientService {
     
     public List<Client> readAllByConseiller(Conseiller conseiller);
+    
+    public Client create(Client t) ;
+
+    public List<Client> readAll();
+
+    public Client readOne(Long pk);
+
+    public Client update(Client t);
+
+    public Boolean delete(Client t);
     
 }

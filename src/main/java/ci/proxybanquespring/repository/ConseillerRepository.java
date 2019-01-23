@@ -13,12 +13,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author willi
  */
-public interface ConseillerRepository extends JpaRepository<Conseiller, Long>{
+public interface ConseillerRepository extends JpaRepository<Conseiller, String>{
     
     public Conseiller findByEmailAndPasswordAndEnabledTrue(String email,String password);
     public Conseiller findByEmailAndEnabledTrue(String email);
-    public List<Conseiller> findByEnabledTrue();
-    public Conseiller findByIdAndEnabledTrue(Long id);
-    
+    public List<Conseiller> findByEnabledTrue();    
     
 }

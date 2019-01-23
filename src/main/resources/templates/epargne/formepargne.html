@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
     <head th:replace="fragment/head::head"> </head>
 
@@ -18,15 +18,21 @@
         <!-- ============================================================== -->
         <div id="main-wrapper">
             <!-- ============================================================== -->
-
+            <!-- Topbar header - style you can find in pages.scss -->
             <!-- ============================================================== -->
             <header th:replace="fragment/header::header"> </header>
             <!-- ============================================================== -->
-
+            <!-- End Topbar header -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Left Sidebar - style you can find in sidebar.scss  -->
             <!-- ============================================================== -->
             <aside th:replace="fragment/slidebar::slidebar"> </aside>
             <!-- ============================================================== -->
-
+            <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Page wrapper  -->
             <!-- ============================================================== -->
             <div class="page-wrapper">
                 <!-- ============================================================== -->
@@ -35,14 +41,14 @@
                 <div class="page-breadcrumb">
                     <div class="row">
                         <div class="col-12 d-flex no-block align-items-center">
-                            <h4 class="page-title">Formulaire versement</h4>
+                            <h4 class="page-title">Formulaire du compte epargne</h4>
                             <div class="ml-auto text-right">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item">
                                             <a th:href="@{/}">Tableau de bord</a>
                                         </li>
-                                        <li class="breadcrumb-item active" aria-current="page">Formulaire versement</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Nouveau compte epargne</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -56,76 +62,31 @@
                 <!-- Container fluid  -->
                 <!-- ============================================================== -->
                 <div class="container-fluid">
-
-
-                    <!--***************** LES MESSAGES D'ALERTS ***************************-->
-                    <block th:replace="fragment/messagealert::alert"></block>
-                    <!--****************** FIN ALERT ERREUR ******************-->
-
                     <!-- ============================================================== -->
                     <!-- Start Page Content -->
                     <!-- ============================================================== -->
                     <div class="card">
                         <div class="card-body wizard-content">
-                            <h4 class="card-title">Information concernant le versement</h4>
+                            <h4 class="card-title">Information concernant le compte epargne de
+                                <span th:text="${clientrecup.nom}"></span> 
+                                <span th:text="${clientrecup.prenom}"></span>
+                            </h4>
                             <h6 class="card-subtitle"></h6>
-                            <form th:object="${versement}" id="example-form" th:action="@{/versement/save}" class="m-t-40" method="post">
+                            <form id="example-form" th:action="@{/epargne/save}" method="post" class="m-t-40">
                                 <div>
-                                    <h3>Versement</h3>
+                                    <h3>Nouveau compte epargne</h3>
                                     <section>
-                                        <label for="numCpt">Numero compte *</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">#</span>
-                                            </div>
-                                            <input id="numCpt" name="numCpt" type="text" class="required form-control" aria-describedby="basic-addon1">
-                                        </div>
-                                        <label for="remettant">Remettant *</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">#</span>
-                                            </div>
-                                            <input id="remettant" th:field="*{remettant}" name="remettant" type="text" class="required form-control" aria-describedby="basic-addon1">
-                                        </div>
-                                        <label for="telRemettant">Tel remettant *</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">#</span>
-                                            </div>
-                                            <input id="telRemettant" th:field="*{telRemettant}" name="telRemettant" type="text" class="required form-control" aria-describedby="basic-addon1">
-                                        </div>
-                                        <br>
-                                        <label for="montant">Montant *</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">CFA</span>
-                                            </div>
-                                            <input id="montant" name="montant" th:field="*{montant}" type="number" class="required form-control" aria-describedby="basic-addon1">
-                                        </div>
-                                        <label for="timbre">Timbre</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">CFA</span>
-                                            </div>
-                                            <input id="timbre" name="timbre" th:field="*{timbre}" type="number" class="form-control" aria-describedby="basic-addon1">
-                                        </div>
-                                        <label for="agence">Agence *</label>
-                                        <div class="input-group">
-                                            <input id="agence" name="agence" th:field="*{agence}" type="text" class="required form-control" aria-describedby="basic-addon1">
-                                        </div>
-                                        <label for="caisse">Caisse *</label>
-                                        <div class="input-group">
-                                            <input id="caisse" name="caisse" th:field="*{caisse}" type="text" class="required form-control" aria-describedby="basic-addon1">
-                                        </div>
+                                        <label for="taux">Taux</label>
+                                        <input id="taux" name="taux" type="number" class="required form-control">
                                         <p>(*) Obligatoire</p>
                                     </section>
                                     <h3>Terminer</h3>
                                     <section>
                                         <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required">
-                                        <label for="acceptTerms">Je suis d'accord avec les informations entrées.</label>
+                                        <label for="acceptTerms">Je suis d'accord avec les informations entrées</label>
                                     </section>
                                 </div>
-                                <button type="submit" id="btnValider" style="display: none"></button>
+                                <button type="submit" style="display: none" id="btnValider">valider</button>
                             </form>
                         </div>
                     </div>
@@ -155,12 +116,11 @@
             <!-- End Page wrapper  -->
             <!-- ============================================================== -->
         </div>
-
         <!-- ============================================================== -->
-    <block th:replace="fragment/js::js"></block>
-    <!-- ============================================================== -->
 
-    <!-- ============================================================== -->
+    <block th:replace="fragment/js::js"> </block>
+
+
     <script>
         // Basic Example with form
         var form = $("#example-form");
@@ -193,11 +153,6 @@
 
 
     </script>
-
-    <!--*********************** DEBUT ALERT JS ****************************-->
-    <block th:replace="fragment/alertjs::alert"></block>
-    <!--*********************** FIN ALERT JS ****************************-->
-
 </body>
 
 </html>

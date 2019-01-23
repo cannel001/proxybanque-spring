@@ -10,6 +10,7 @@ import ci.proxybanquespring.domaine.Compte;
 import ci.proxybanquespring.domaine.Versement;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  *
@@ -17,6 +18,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface VersementRepository extends JpaRepository<Versement, Long>{
     
+    public List<Versement> findByCompteClientAndEnabledTrue(Client c);
     public Versement findByNumOperationAndEnabledTrue(Long numOp);
     public List<Versement> findByEnabledTrue();
     public List<Versement> findByCompteAndEnabledTrue(Compte compte);

@@ -5,17 +5,21 @@
  */
 package ci.proxybanquespring.service.impl;
 
+import ci.proxybanquespring.service.ISendEmailService;
 import org.simplejavamail.email.Email;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.MailerBuilder;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author HP
  */
-public class SendMailService {
+@Service
+public class SendMailService implements ISendEmailService{
 
-    public static Boolean sendMyEmail(String nameDestinataire, String emailDestinataire,String message,String sujet) {
+    @Override
+    public Boolean sendMyEmail(String nameDestinataire, String emailDestinataire,String message,String sujet) {
 
         try {
 

@@ -5,9 +5,15 @@
  */
 package ci.proxybanquespring.service.impl;
 
+import ci.proxybanquespring.domaine.Client;
 import ci.proxybanquespring.domaine.Courant;
+import ci.proxybanquespring.domaine.Epargne;
 import ci.proxybanquespring.domaine.Virement;
 import ci.proxybanquespring.repository.VirementRepository;
+import ci.proxybanquespring.service.IClientService;
+import ci.proxybanquespring.service.ICourantService;
+import ci.proxybanquespring.service.IEpargneService;
+import ci.proxybanquespring.service.IOperationService;
 import ci.proxybanquespring.service.IVirementService;
 import java.util.Date;
 import java.util.List;
@@ -26,63 +32,109 @@ public class VirementService implements IVirementService {
     private VirementRepository virementRepository;
 
     @Autowired
-    private CourantService courantService;
-    
+    private ICourantService courantService;
+
+    @Autowired
+    private IEpargneService epargneService;
+
+    @Autowired
+    private IOperationService operationService;
+
     @Autowired
     private NumeroTransactionService numeroTransactionService;
+    
+    @Autowired
+    private IClientService clientService;
 
     @Override
     public Boolean retirer(Virement virement) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    @Override
-    public Boolean verifSolde(String cpt, Double montant) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (virement != null) {
+            virement.setTypVirement("RETIRER");
+            return create(virement) != null;
+        }
+
+        return false;
     }
 
     @Override
     public Long virementCompteACompte(String cptDebit, String cptCredit, Double montant) {
 
         if (!"".equals(cptDebit) && !"".equals(cptCredit) && montant > 0) {
+
             Long reference = Long.valueOf((String) numeroTransactionService.generate());
             Virement virementDebit;
             Virement virementCredit;
 
-//            //creation de l'objet virementdebiter
-//            if (courantService.verifNumeroCompte(cptDebit)) {
-//                virementDebit = new Virement(Long.valueOf((String) numeroTransactionService.generate()), new Date(), montant, courantService.readOne(cptDebit));
-//            } else {
-//                virementDebit = new Virement(Long.valueOf((String) numeroTransactionService.generate()), new Date(), montant, epargneService.readOne(cptDebit));
-//            }
-//
-//            //creation de l'objet virementCrediter
-//            if (courantService.verifNumeroCompte(cptCredit)) {
-//                virementCredit = new Virement(Long.valueOf((String) numeroTransactionService.generate()), new Date(), montant, courantService.readOne(cptCredit));
-//            } else {
-//                virementCredit = new Virement(Long.valueOf((String) numeroTransactionService.generate()), new Date(), montant, epargneService.readOne(cptCredit));
-//            }
+            //creation de l'objet virementdebiter
+            if (courantService.verifNumeroCompte(cptDebit)) {
+                Courant courant = courantService.readOne(cptDebit);
+                virementDebit = new Virement();
+                virementDebit.setCompte(courant);
+                virementDebit.setAncienSolde(courant.getSolde());
+                virementDebit.setNouveauSolde(courant.getSolde() - montant);
+                //update du compte courant
+                courant.setSolde(courant.getSolde() - montant);
+                courantService.update(courant);
+            } else {
+                Epargne epargne = epargneService.readOne(cptDebit);
+                virementDebit = new Virement();
+                virementDebit.setCompte(epargne);
+                virementDebit.setAncienSolde(epargne.getSolde());
+                virementDebit.setNouveauSolde(epargne.getSolde() - montant);
+                //update du compte epargne
+                epargne.setSolde(epargne.getSolde() - montant);
+                epargneService.update(epargne);
+            }
 
-//            virementDebit.setReference(reference);
-//            virementDebit.setDateCreation(new Date());
-//            virementDebit.setDateUpdate(new Date());
-//            virementDebit.setStatut(true);
-//            
-//            virementCredit.setReference(reference);
-//            virementCredit.setDateCreation(new Date());
-//            virementCredit.setDateUpdate(new Date());
-//            virementCredit.setStatut(true);
+            //creation de l'objet virementCrediter
+            if (courantService.verifNumeroCompte(cptCredit)) {
+                Courant courant = courantService.readOne(cptCredit);
+                virementCredit = new Virement();
+                virementCredit.setCompte(courant);
+                virementCredit.setAncienSolde(courant.getSolde());
+                virementCredit.setNouveauSolde(courant.getSolde() + montant);
+                //update du compte courant
+                courant.setSolde(courant.getSolde() + montant);
+                courantService.update(courant);
 
-//            if (virementRepository.save(virementDebit)!=null && virementRepository.save(virementCredit)!=null) {
-//
-//                return reference;
-//
-//            }
+            } else {
+                Epargne epargne = epargneService.readOne(cptCredit);
+                virementCredit = new Virement();
+                virementCredit.setCompte(epargne);
+                virementCredit.setAncienSolde(epargne.getSolde());
+                virementCredit.setNouveauSolde(epargne.getSolde() + montant);
+                //update du compte epargne
+                epargne.setSolde(epargne.getSolde() + montant);
+                epargneService.update(epargne);
+            }
 
-            return (long) 0;
+            virementDebit.setReference(reference);
+            virementDebit.setMontant(montant);
+            virementDebit.setDateCreation(new Date());
+            virementDebit.setDateUpdate(new Date());
+            virementDebit.setDateOperation(new Date());
+            virementDebit.setEnabled(true);
+            virementDebit.setNote("Virement de compte à compte");
+            virementDebit.setNumOperation(Long.valueOf(numeroTransactionService.generate().toString()));
+
+            virementCredit.setReference(reference);
+            virementCredit.setMontant(montant);
+            virementCredit.setDateCreation(new Date());
+            virementCredit.setDateUpdate(new Date());
+            virementCredit.setDateOperation(new Date());
+            virementCredit.setEnabled(true);
+            virementCredit.setNote("Virement de compte à compte");
+            virementCredit.setNumOperation(Long.valueOf(numeroTransactionService.generate().toString()));
+
+            if (retirer(virementDebit).equals(true) && verser(virementCredit).equals(true)) {
+                return reference;
+            }
+
+            return null;
         }
-        
-        return (long)0;
+
+        return null;
 
     }
 
@@ -94,73 +146,33 @@ public class VirementService implements IVirementService {
             Courant courant = null;
             Boolean responseContrainte = true;
 
-            String typeCompt1;
-            String typeCompt2;
-
             //recuperer les types comptes des deux comptes
-            //cpt1
-            if (courantService.verifNumeroCompte(cpt1)) {
-                typeCompt1 = "courant";
-            } else {
-                typeCompt1 = "epargne";
-            }
+            String typeCompt1 = operationService.typeCompte(cpt1);
+            String typeCompt2 = operationService.typeCompte(cpt2);
 
-            //cpt2
-            if (courantService.verifNumeroCompte(cpt2)) {
-                typeCompt2 = "courant";
-            } else {
-                typeCompt2 = "epargne";
-            }
+            if (typeCompt1 != null && typeCompt2 != null) {
 
-            //verification des comptes
-            //Meme numero de compte
-            if (cpt1.equals(cpt2)) {
-                responseContrainte = false;
-            }
+                //verification des comptes
+                //Meme numero de compte
+                if (cpt1.equals(cpt2)) {
+                    responseContrainte = false;
+                }
 
-            //verification des types
-            if (typeCompt1.equals("epargne") && typeCompt2.equals("courant")) {
-                responseContrainte = false;
-            }
+                //verification des types
+                if (typeCompt1.equals("epargne") && typeCompt2.equals("courant")) {
+                    responseContrainte = false;
+                }
 
-            if (typeCompt1.equals("epargne") && typeCompt2.equals("epargne")) {
-                responseContrainte = false;
+                if (typeCompt1.equals("epargne") && typeCompt2.equals("epargne")) {
+                    responseContrainte = false;
+                }
+
             }
 
             return responseContrainte;
         }
         return false;
 
-    }
-
-    @Override
-    public List<Virement> readAllVirementParCompte(String compte) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Virement> readAllVirementRetirerParCompte(String compte) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Virement> readAllVirementPrClient(Long idClient) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Virement> readAllVirementVerserParCompte(String compte) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Virement> readAllVirementVirePrClient(Long idClient) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Virement> readAllVirementRecuPrClient(Long idClient) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -183,7 +195,7 @@ public class VirementService implements IVirementService {
 
     }
 
-    
+    @Override
     public Virement create(Virement t) {
 
         if (t != null) {
@@ -196,14 +208,14 @@ public class VirementService implements IVirementService {
 
     }
 
-    
+    @Override
     public List<Virement> readAll() {
 
         return virementRepository.findByEnabledTrue();
 
     }
 
-    
+    @Override
     public Virement readOne(Long pk) {
 
         if (pk > 0) {
@@ -213,7 +225,7 @@ public class VirementService implements IVirementService {
 
     }
 
-    
+    @Override
     public Virement update(Virement t) {
 
         if (t != null) {
@@ -224,7 +236,7 @@ public class VirementService implements IVirementService {
 
     }
 
-    
+    @Override
     public Boolean delete(Virement t) {
 
         if (t != null) {
@@ -235,5 +247,43 @@ public class VirementService implements IVirementService {
         return null;
 
     }
+
+    @Override
+    public Boolean verser(Virement virement) {
+
+        if (virement != null) {
+            virement.setTypVirement("VERSER");
+            return create(virement) != null;
+        }
+        return false;
+    }
+
+    @Override
+    public List<Virement> readAllVirementByClientAndRetirer(Long idClient) {
+
+        if (idClient > 0) {
+            Client client = clientService.readOne(idClient);
+            if(client!=null){
+                return virementRepository.findByCompteClientAndEnabledTrueAndTypVirement(client, "RETIRER");
+            }
+        }
+        return null;
+
+    }
+
+    @Override
+    public List<Virement> readAllVirementByClientAndVerser(Long idClient) {
+
+        if (idClient > 0) {
+            Client client = clientService.readOne(idClient);
+            if(client!=null){
+                return virementRepository.findByCompteClientAndEnabledTrueAndTypVirement(client, "VERSER");
+            }
+        }
+        return null;
+
+    }
+    
+    
 
 }

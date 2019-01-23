@@ -8,6 +8,8 @@ package ci.proxybanquespring.domaine;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +17,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -23,6 +28,8 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 /**
  *
@@ -31,14 +38,12 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Conseiller")
 @Table(name = "conseiller")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class Conseiller implements Serializable {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "email")
+    private String email;
     
     @Column(name ="nom" )
     private String nom;
@@ -47,16 +52,10 @@ public class Conseiller implements Serializable {
     private String prenom;
     
     @Column(name = "tel")
-    private String tel;
-    
-    @Column(name = "email")
-    private String email;
+    private String tel; 
     
     @Column(name ="password" )
     private String password;
-    
-    @Column(name = "roleUser")
-    private String roleUser;
     
     @NotNull
     private Boolean enabled;
@@ -72,6 +71,11 @@ public class Conseiller implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,mappedBy ="conseiller",cascade = CascadeType.MERGE )
     private Collection<Client> clients;
     
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinTable(name = "conseillers_roles", joinColumns = @JoinColumn(name = "email"), inverseJoinColumns = @JoinColumn(name = "role"))
+    private Set<Roles> roleses;
+    
     /**
      * Constructeur sans id
      * @param nom
@@ -79,16 +83,19 @@ public class Conseiller implements Serializable {
      * @param tel
      * @param email
      * @param password
-     * @param role 
      */
-    public Conseiller(String nom, String prenom, String tel, String email, String password,String role) {
+    public Conseiller(String nom, String prenom, String tel, String email, String password) {
         this.nom = nom;
         this.prenom = prenom;
         this.tel = tel;
         this.email = email;
         this.password = password;
-        this.roleUser=role;
     }
+
+    public Conseiller() {
+    }
+    
+    
     
     
     

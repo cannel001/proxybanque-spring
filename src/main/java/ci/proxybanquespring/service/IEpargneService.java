@@ -7,6 +7,7 @@ package ci.proxybanquespring.service;
 
 import ci.proxybanquespring.domaine.Courant;
 import ci.proxybanquespring.domaine.Epargne;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,13 +15,23 @@ import java.util.List;
  * @author willi
  */
 public interface IEpargneService {
-    
+
     public String generateNumeroCompte();
-    
+
     public Boolean verifNumeroCompte(String numero);
-    
+
     public List<Epargne> readAllParClient(Long idClient);
-    
-    public int countByConseiller(Long idConseiller);
-    
+
+    public int countByConseiller(String email);
+
+    public Epargne create(Epargne t);
+
+    public List<Epargne> readAll();
+
+    public Epargne readOne(String pk);
+
+    public Epargne update(Epargne t);
+
+    public Boolean delete(Epargne t);
+
 }

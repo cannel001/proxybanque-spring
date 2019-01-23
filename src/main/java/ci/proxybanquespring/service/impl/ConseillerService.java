@@ -6,13 +6,17 @@
 package ci.proxybanquespring.service.impl;
 
 import ci.proxybanquespring.domaine.Conseiller;
+import ci.proxybanquespring.domaine.Roles;
 import ci.proxybanquespring.repository.ConseillerRepository;
 import ci.proxybanquespring.service.IConseillerService;
-import com.google.common.hash.Hashing;
 import java.nio.charset.Charset;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,7 +33,7 @@ public class ConseillerService implements IConseillerService {
     @Override
     public String cryptagePssword(String password) {
 
-        String codeCrypte = Hashing.sha256().hashString(password, Charset.defaultCharset()).toString();
+        String codeCrypte = (new BCryptPasswordEncoder()).encode(password);
         return codeCrypte;
 
     }
@@ -54,7 +58,7 @@ public class ConseillerService implements IConseillerService {
 
     }
 
-    
+    @Override
     public Conseiller create(Conseiller t) {
 
         if (t != null) {
@@ -67,24 +71,24 @@ public class ConseillerService implements IConseillerService {
 
     }
 
-    
+    @Override
     public List<Conseiller> readAll() {
 
         return conseillerRepository.findByEnabledTrue();
 
     }
 
-    
-    public Conseiller readOne(Long pk) {
+    @Override
+    public Conseiller readOne(String email) {
 
-        if (pk > 0) {
-            return conseillerRepository.findByIdAndEnabledTrue(pk);
+        if (!"".equals(email)) {
+            return conseillerRepository.findByEmailAndEnabledTrue(email);
         }
         return null;
 
     }
 
-    
+    @Override
     public Conseiller update(Conseiller t) {
 
         if (t != null) {
@@ -95,7 +99,7 @@ public class ConseillerService implements IConseillerService {
 
     }
 
-    
+    @Override
     public Boolean delete(Conseiller t) {
 
         if (t != null) {
@@ -107,21 +111,61 @@ public class ConseillerService implements IConseillerService {
 
     }
 
-    
+    @Override
     public void conseillerParDefaut() {
         
         System.out.println("************** passage dans conseiller par defaut *****************");
 
         if(conseillerRepository.findByEnabledTrue().isEmpty()){
+            
+            Set<Roles> mesRoles=new HashSet<>();
+            Set<Roles> mesRoles2=new HashSet<>();
+            
+            mesRoles.add(new Roles("ADMIN"));
+            mesRoles2.add(new Roles("USER"));
+            
             System.out.println("************** creation du nouveau conseiller *****************");
             Conseiller conseiller=new Conseiller();
+            Conseiller conseiller2=new Conseiller();
+            
             conseiller.setNom("Root");
             conseiller.setEmail("root@root.com");
+            conseiller.setPassword((new BCryptPasswordEncoder()).encode("proxybanque"));
+            conseiller.setRoleses(mesRoles);
+            
+            conseiller2.setNom("user");
+            conseiller2.setEmail("user@user.com");
+            conseiller2.setPassword((new BCryptPasswordEncoder()).encode("proxybanque"));
+            conseiller2.setRoleses(mesRoles2);
+            
             this.create(conseiller);
+            this.create(conseiller2);
             
             System.out.println("************** nouveau conseiller cree *****************");
         }
 
+    }
+    
+    @Override
+    public String genererCode() {
+
+        Random aleatoire = new Random();
+        String code = "0123456789";
+        String codeGenere = "";
+        int index;
+
+        for (int i = 0; i < 6; i++) {
+            index = aleatoire.nextInt(code.length());
+            codeGenere += code.charAt(index);
+        }
+
+        return codeGenere;
+
+    }
+
+    @Override
+    public String genererPassword() {
+        return genererCode();
     }
 
 }

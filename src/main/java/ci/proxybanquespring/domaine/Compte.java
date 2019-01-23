@@ -27,6 +27,7 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -35,7 +36,6 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Compte")
 @Table(name = "compte")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Inheritance(strategy =InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name ="type_cpt")
@@ -47,6 +47,7 @@ public abstract class Compte implements Serializable {
     
     @Temporal(TemporalType.DATE)
     @Column(name ="dateOuverture" )
+    @DateTimeFormat(pattern = "yyyy-MM-d")
     private Date dateOuverture;
     
     private Double solde;
@@ -62,7 +63,6 @@ public abstract class Compte implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateUpdate;
     
-    @NotNull
     private Long idUser;
    
     @ManyToOne(fetch = FetchType.LAZY)
@@ -83,5 +83,10 @@ public abstract class Compte implements Serializable {
         this.solde = solde;
         this.client = client;
     }
+
+    public Compte() {
+    }
+    
+    
     
 }

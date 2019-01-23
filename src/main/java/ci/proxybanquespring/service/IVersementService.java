@@ -6,20 +6,27 @@
 package ci.proxybanquespring.service;
 
 import ci.proxybanquespring.domaine.Versement;
+import java.util.Date;
 import java.util.List;
 
 /**
  *
  * @author willi
  */
-public interface IVersementService{
-    
-    public Long generateNumTransc();
-    
-    public List<Versement> readAllVersementPrClient(Long idClient);
-    
-    public String typeCompte(String numeroCpt);
-    
+public interface IVersementService {
+
+    public List<Versement> readAllVersementByClient(Long idClient);
+
     public List<Versement> readAllVersementParCompte(String compte);
-    
+
+    public Versement create(Versement t);
+
+    public List<Versement> readAll();
+
+    public Versement readOne(Long pk);
+
+    public Versement update(Versement t);
+
+    public Boolean delete(Versement t);
+
 }

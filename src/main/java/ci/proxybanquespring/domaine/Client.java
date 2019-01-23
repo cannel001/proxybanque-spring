@@ -33,7 +33,6 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Client")
 @Table(name = "client")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class Client implements Serializable {
 
@@ -57,19 +56,18 @@ public class Client implements Serializable {
 
     @Column(name = "adresse")
     private String adresse;
-    
+
     @NotNull
     private Boolean enabled;
-    
+
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreation;
-    
+
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateUpdate;
-    
-    @NotNull
+
     private Long idUser;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -96,6 +94,14 @@ public class Client implements Serializable {
         this.email = email;
         this.conseiller = conseiller;
         this.adresse = adresse;
+    }
+
+    public Client() {
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", tel=" + tel + ", email=" + email + ", adresse=" + adresse + ", enabled=" + enabled + ", dateCreation=" + dateCreation + ", dateUpdate=" + dateUpdate + ", idUser=" + idUser + '}';
     }
 
 }

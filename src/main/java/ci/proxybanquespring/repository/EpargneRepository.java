@@ -21,4 +21,5 @@ public interface EpargneRepository extends JpaRepository<Epargne, String>{
     public List<Epargne> findByClientAndEnabledTrue(Client client);
     public List<Epargne> findByEnabledTrue();
     
+    
 }
