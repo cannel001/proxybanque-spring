@@ -12,6 +12,7 @@ import ci.proxybanquespring.service.IClientService;
 import ci.proxybanquespring.service.ICourantService;
 import ci.proxybanquespring.service.IEpargneService;
 import ci.proxybanquespring.service.ISendEmailService;
+import ci.proxybanquespring.service.ISendSmsService;
 import ci.proxybanquespring.service.impl.ConseillerService;
 import java.util.Date;
 import java.util.HashSet;
@@ -46,6 +47,9 @@ public class IndexController {
     
     @Autowired
     private ISendEmailService sendEmailService;
+    
+    @Autowired
+    private ISendSmsService sendSmsService;
 
     @GetMapping(value = "")
     public String index(Model model, HttpServletRequest request) {
@@ -136,6 +140,8 @@ public class IndexController {
                 
                 //envoi du mail
                 sendEmailService.sendMyEmail(nomDestinataire, emailDestinataire, messageEmail, sujet);
+                
+                //sendSmsService.sendMySms(sujet, messageEmail)
                 request.getSession().setAttribute("success", "Votre compte a été creer avec succès. Veuillez consulter votre boite de messagerie pour recuperer les parametres de connexion");
                 return "redirect:/login";
             }

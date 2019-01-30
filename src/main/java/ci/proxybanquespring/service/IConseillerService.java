@@ -6,12 +6,7 @@
 package ci.proxybanquespring.service;
 
 import ci.proxybanquespring.domaine.Conseiller;
-import ci.proxybanquespring.domaine.Roles;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  *
