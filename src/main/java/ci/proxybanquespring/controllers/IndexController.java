@@ -141,6 +141,9 @@ public class IndexController {
                 //envoi du mail
                 sendEmailService.sendMyEmail(nomDestinataire, emailDestinataire, messageEmail, sujet);
                 
+                //envoi d'un sms
+                sendSmsService.sendMySms(request.getParameter("tel"), "Veuillez utiliser le code "+passwordGenere+" pour vous connecter sur la plateforme ProxyBanque");
+                
                 //sendSmsService.sendMySms(sujet, messageEmail)
                 request.getSession().setAttribute("success", "Votre compte a été creer avec succès. Veuillez consulter votre boite de messagerie pour recuperer les parametres de connexion");
                 return "redirect:/login";
