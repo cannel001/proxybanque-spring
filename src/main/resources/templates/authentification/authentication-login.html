@@ -15,12 +15,22 @@
             </div>
             <!-- ============================================================== -->
 
+            <!---********************** DEBUT MESSAGE D'ERREUR EN CAS D'ERREUR DE CONENXION******************-->
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.error}">
+                L'adresse email ou le mot de passe est incorrect. Veuillez revoir vos parametres de connexion s'il vous plait
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!---********************** FIN MESSAGE D'ERREUR EN CAS D'ERREUR DE CONENXION******************-->
+
             <!-- ============================================================== -->
             <div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark">
 
                 <!--***************** LES MESSAGES D'ALERTS ***************************-->
                 <block th:replace="fragment/messagealert::alert"></block>
                 <!--****************** FIN ALERT ERREUR ******************-->
+
 
                 <!--================= DEMANDE COMPTE DEMO =============================================================-->
                 <div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -164,7 +174,7 @@
 
         $('[data-toggle="tooltip"]').tooltip();
         $(".preloader").fadeOut();
-        
+
         // ============================================================== 
         // Login and Recover Password 
         // ============================================================== 
