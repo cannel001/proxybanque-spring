@@ -20,6 +20,9 @@ Les Differentes fonctionnalitées de l'application sont:
     Gestion des clients
     Gestion des conseillers
     Gestion des comptes (courants et epargnes)
+    
+    ![Alt text](https://res.cloudinary.com/dtpt8vqjj/image/upload/v1550678940/Capture_du_2019-02-20_16-02-36.png?raw=true "Optional title")
+    
 
 Une version demo de l'application est disponible à l'adresse https://proxybanquesg6.herokuapp.com
 
