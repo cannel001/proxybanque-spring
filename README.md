@@ -23,7 +23,11 @@ Les Differentes fonctionnalitées de l'application sont:
     
  # Ecran de connexion
  
-![capture du 2019-02-20 16-02-36](https://user-images.githubusercontent.com/18190155/53106298-a551a280-352a-11e9-9a3e-6fd245b9fc28.png)  
+![capture du 2019-02-20 16-02-36](https://user-images.githubusercontent.com/18190155/53106298-a551a280-352a-11e9-9a3e-6fd245b9fc28.png) 
+
+# Creation d'un nouveau compte
+
+![capture du 2019-02-20 16-19-50](https://user-images.githubusercontent.com/18190155/53106682-7687fc00-352b-11e9-8067-2d29af617be8.png)
 
 
 Une version demo de l'application est disponible à l'adresse https://proxybanquesg6.herokuapp.com
