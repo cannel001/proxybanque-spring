@@ -36,8 +36,8 @@ public class SendSmsService implements ISendSmsService{
             String myURI = "https://api.bulksms.com/v1/messages";
 
             // change these values to match your own account
-            String myUsername = "cannel001";
-            String myPassword = "orange001";
+            String myUsername = "username";
+            String myPassword = "password";
 
             // the details of the message we want to send
             String myData = "{to: \"+225"+numero+"\", body: \""+message+"\"}";
