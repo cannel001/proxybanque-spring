@@ -24,14 +24,14 @@ public class SendMailService implements ISendEmailService{
         try {
 
             Email email = EmailBuilder.startingBlank()
-                    .from("noreply-prepaid@proxybanque.ci", "cannelseka@mail.com")
+                    .from("noreply-prepaid@proxybanque.ci", "test@mail.com")
                     .to(nameDestinataire,emailDestinataire)
                     .withSubject(sujet)
                     .withPlainText(message)
                     .buildEmail();
 
             MailerBuilder
-                    .withSMTPServer("smtp.gmail.com", 587, "cannelseka@mail.com", "orange001")
+                    .withSMTPServer("smtp.gmail.com", 587, "test@mail.com", "password")
                     .buildMailer()
                     .sendMail(email);
             return true;
