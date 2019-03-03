@@ -25,65 +25,68 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  *
- * @author KOUASSI
+ * @author Seka Cannel Ulrich Evrard
+ *
+ * Cette classe represente une operation, elle implemente l'interface
+ * Serializable
+ *
  */
 @Entity(name = "Operation")
 @Table(name = "operation")
 @Data
 @AllArgsConstructor
-@Inheritance(strategy =InheritanceType.SINGLE_TABLE)
-public abstract class  Operation implements Serializable{
-    
-    @Id 
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Operation implements Serializable {
+
+    @Id
     @Column(name = "numOperation")
     private Long numOperation;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateOperation")
     private Date dateOperation;
-    
-    @Column(name ="montant" )
+
+    @Column(name = "montant")
     private Double montant;
-    
+
     private String note;
-    
+
     private Double ancienSolde;
-    
+
     private Double nouveauSolde;
-    
+
     private String devise;
-    
+
     @Column(name = "agence")
     private String agence;
-    
+
     @Column(name = "caisse")
     private String caisse;
-    
+
     @NotNull
     private Boolean enabled;
-    
+
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreation;
-    
+
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateUpdate;
-    
+
     private Long idUser;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="compte_id")
+    @JoinColumn(name = "compte_id")
     private Compte compte;
-    
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "Billetages")
-    private Set<Billetage> billetages;  
-    
+    private Set<Billetage> billetages;
+
     //constructeur
     public Operation(Long numOperation, Date dateOperation, Double montant, String note, Double ancienSolde, Double nouveauSolde, String devise, Long idUser, Compte compte) {
         this.numOperation = numOperation;
@@ -99,8 +102,5 @@ public abstract class  Operation implements Serializable{
 
     public Operation() {
     }
-    
-    
-    
-    
+
 }

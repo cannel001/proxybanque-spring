@@ -5,6 +5,7 @@
  */
 package ci.proxybanquespring.domaine;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,16 +15,18 @@ import lombok.NoArgsConstructor;
 
 /**
  *
- * @author willi
+ * @author Seka Cannel Ulrich Evrard
+ *
+ * Cette classe represente un role user
  */
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Roles {
-    
+public class Roles implements Serializable{
+
     @Id
     @Column(name = "role")
     private String role;
-    
+
 }

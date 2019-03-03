@@ -5,8 +5,6 @@
  */
 package ci.proxybanquespring.domaine;
 
-import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -16,14 +14,17 @@ import lombok.NoArgsConstructor;
 
 /**
  *
- * @author KOUASSI
+ * @author Seka Cannel Ulrich Evrard
+ *
+ * Cette classe represente un epargne, elle herite de la classe Compte
+ *
  */
 @Entity
 @Data
 @NoArgsConstructor
 @DiscriminatorValue(value = "compte_epargne")
-public class Epargne extends Compte implements Serializable {
-    
+public class Epargne extends Compte {
+
     @Column(name = "taux")
     private Float taux;
 
@@ -31,7 +32,4 @@ public class Epargne extends Compte implements Serializable {
         super(dateOuverture, solde, client);
     }
 
-    
-    
-    
 }

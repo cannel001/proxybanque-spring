@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 
 /**
  *
- * @author willi
+ * @author Seka Cannel Ulrich Evrard
+ *
+ * Cette classe represente un retrait, elle herite de la classe Operation
  */
 @Entity
 @NoArgsConstructor

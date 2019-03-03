@@ -5,7 +5,6 @@
  */
 package ci.proxybanquespring.domaine;
 
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -13,12 +12,14 @@ import lombok.Data;
 
 /**
  *
- * @author KOUASSI
+ * @author Seka Cannel Ulrich Evrard
+ *
+ * Cette classe represente un versement, elle herite de la classe Operation
  */
 @Entity
 @Data
 @DiscriminatorValue(value = "operation_versement")
-public class Versement extends Operation implements Serializable {
+public class Versement extends Operation {
 
     private String remettant;
 

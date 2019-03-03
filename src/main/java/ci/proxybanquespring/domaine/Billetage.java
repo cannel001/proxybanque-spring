@@ -19,36 +19,40 @@ import lombok.NoArgsConstructor;
 
 /**
  *
- * @author willi
+ * @author seka Cannel Ulrich Evrard
+ *
+ * cette classe represente un billetage, elle implemente l'interface
+ * Serializable
+ *
  */
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Billetage implements Serializable{
-    
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Billetage implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String valeurRecu;
-    
+
     private Integer nbRecu;
-    
+
     private Long montantRecu;
-    
+
     private Integer nbRendu;
-    
+
     private Long montantRendu;
-    
+
     private Long idUser;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreation;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateUpdate;
-    
+
     private Boolean enabled;
-    
-    
+
 }

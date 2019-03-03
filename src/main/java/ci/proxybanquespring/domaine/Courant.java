@@ -5,40 +5,35 @@
  */
 package ci.proxybanquespring.domaine;
 
-import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Seka Cannel Ulrich Evrard
+ *
+ * Cette classe represente un compte courant, elle herite de la classe Compte
+ *
  */
 @Entity
 @Data
 @AllArgsConstructor
 @DiscriminatorValue(value = "compte_courant")
-public class Courant extends Compte implements Serializable{
-    
+public class Courant extends Compte {
+
     @Column(name = "montantInitial")
     private Double montantInitial;
-    
+
     /**
      * 
-     * @param montantInitial
-     * @param numCpt
      * @param dateOuverture
      * @param solde
-     * @param client
-     * @param operations 
+     * @param client 
      */
-    
-
     public Courant(Date dateOuverture, Double solde, Client client) {
         super(dateOuverture, solde, client);
     }
@@ -50,10 +45,5 @@ public class Courant extends Compte implements Serializable{
 
     public Courant() {
     }
-    
-    
 
-    
-    
-    
 }

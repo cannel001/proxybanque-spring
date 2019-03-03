@@ -24,11 +24,13 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Seka Cannel Ulrich Evrard
+ *
+ * Cette classe represente un client, elle implemente l'interface Serializable
+ *
  */
 @Entity(name = "Client")
 @Table(name = "client")
