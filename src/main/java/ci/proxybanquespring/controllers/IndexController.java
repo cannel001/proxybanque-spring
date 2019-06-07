@@ -5,8 +5,8 @@
  */
 package ci.proxybanquespring.controllers;
 
-import ci.proxybanquespring.domaine.Client;
-import ci.proxybanquespring.domaine.Conseiller;
+import ci.proxybanquespring.domaine.Advisor;
+import ci.proxybanquespring.domaine.Customer;
 import ci.proxybanquespring.domaine.Roles;
 import ci.proxybanquespring.service.IClientService;
 import ci.proxybanquespring.service.ICourantService;
@@ -16,7 +16,6 @@ import ci.proxybanquespring.service.ISendSmsService;
 import ci.proxybanquespring.service.impl.ConseillerService;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
@@ -54,20 +53,20 @@ public class IndexController {
     @GetMapping(value = "")
     public String index(Model model, HttpServletRequest request) {
 
-        //recuperer le conseiller connecté
+        //recuperer le advisor connecté
         String email = request.getRemoteUser();
 
-        Conseiller conseillerConnecte = conseillerService.readOne(email);
+        Advisor advisorConnecte = conseillerService.readOne(email);
 
-        //recuperer la liste des clients par conseiller
-        List<Client> listeClients;
-        listeClients = clientService.readAllByConseiller(conseillerConnecte);
+        //recuperer la liste des clients par advisor
+        List<Customer> listeClients;
+        listeClients = clientService.readAllByConseiller(advisorConnecte);
 
         //renvoyer les infos à la vue
         if (!listeClients.isEmpty()) {
 
-            //recuperer le nombre de comptes par conseillers
-            int nbCompte = courantService.countByConseiller(conseillerConnecte.getEmail()) + epargneService.countByConseiller(conseillerConnecte.getEmail());
+            //recuperer le nombre de accounts par conseillers
+            int nbCompte = courantService.countByConseiller(advisorConnecte.getEmail()) + epargneService.countByConseiller(advisorConnecte.getEmail());
 
             model.addAttribute("listeClients", listeClients);
             model.addAttribute("nbClients", listeClients.size());
@@ -117,26 +116,26 @@ public class IndexController {
         //verification de l'existance de l'email et de l'adresse ip
         if (conseillerService.readOne(email) != null) {
             //renvoyer un message à vue
-            request.getSession().setAttribute("failure", "Ce email est déjà attribué à un autre conseiller");
+            request.getSession().setAttribute("failure", "Ce email est déjà attribué à un autre advisor");
             return "redirect:/login";
         } else {
             //inscription
-            Conseiller conseiller = new Conseiller();
-            conseiller.setEmail(email);
-            conseiller.setPassword(conseillerService.cryptagePssword(passwordGenere));
-            conseiller.setNom("user");
-            conseiller.setPrenom("demo");
-            conseiller.setRoleses(roleUser);
+            Advisor advisor = new Advisor();
+            advisor.setEmail(email);
+            advisor.setPassword(conseillerService.cryptagePssword(passwordGenere));
+            advisor.setNom("user");
+            advisor.setPrenom("demo");
+            advisor.setRoleses(roleUser);
 
-            if (conseillerService.create(conseiller) != null) {
+            if (conseillerService.create(advisor) != null) {
                 //envoi de l'email au client
                 String nomDestinataire = "Moi";
-                String emailDestinataire = conseiller.getEmail();
+                String emailDestinataire = advisor.getEmail();
                 String messageEmail = "La bienvenue sur la plateforme PROXY BANQUE G6\n\nInformations concernant"
-                        + " votre compte conseiller"
-                        + "\nEmail : " + conseiller.getEmail() + "\nDate d'ouverture : " + new Date() + "\nMot de passe : "
+                        + " votre account advisor"
+                        + "\nEmail : " + advisor.getEmail() + "\nDate d'ouverture : " + new Date() + "\nMot de passe : "
                         + passwordGenere;
-                String sujet = "Ouverture de compte demo";
+                String sujet = "Ouverture de account demo";
                 
                 //envoi du mail
                 sendEmailService.sendMyEmail(nomDestinataire, emailDestinataire, messageEmail, sujet);
@@ -145,7 +144,7 @@ public class IndexController {
                 sendSmsService.sendMySms(request.getParameter("tel"), "Veuillez utiliser le code "+passwordGenere+" pour vous connecter sur la plateforme ProxyBanque");
                 
                 //sendSmsService.sendMySms(sujet, messageEmail)
-                request.getSession().setAttribute("success", "Votre compte a été creer avec succès. Veuillez consulter votre boite de messagerie pour recuperer les parametres de connexion");
+                request.getSession().setAttribute("success", "Votre account a été creer avec succès. Veuillez consulter votre boite de messagerie pour recuperer les parametres de connexion");
                 return "redirect:/login";
             }
         }

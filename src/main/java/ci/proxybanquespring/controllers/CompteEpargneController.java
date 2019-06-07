@@ -5,8 +5,8 @@
  */
 package ci.proxybanquespring.controllers;
 
-import ci.proxybanquespring.domaine.Client;
-import ci.proxybanquespring.domaine.Epargne;
+import ci.proxybanquespring.domaine.Customer;
+import ci.proxybanquespring.domaine.Savings;
 import ci.proxybanquespring.service.IClientService;
 import ci.proxybanquespring.service.IEpargneService;
 import ci.proxybanquespring.service.ISendEmailService;
@@ -46,7 +46,7 @@ public class CompteEpargneController {
     public String afficherFormEpargne(@PathVariable Long id,Model model,HttpServletRequest request){
         
         //recuperation des infos de la requete
-        Client client=clientService.readOne(id);
+        Customer client=clientService.readOne(id);
         
         System.out.println("********************** client "+client);
         
@@ -61,29 +61,29 @@ public class CompteEpargneController {
     public String saveEpargne(Model model,HttpServletRequest request){
         Float taux=Float.valueOf(request.getParameter("taux"));
         Object objectRecuperer=request.getSession().getAttribute("client");
-        Client clientRecuperer = new Client();
+        Customer clientRecuperer = new Customer();
         if(objectRecuperer!=null){
             request.getSession().removeAttribute("client");
-            clientRecuperer=(Client)objectRecuperer;
-            Epargne epargne=new Epargne();
-            epargne.setNumCpt(ibanService.generate().toString());
-            epargne.setClient(clientRecuperer);
-            epargne.setTaux(taux);
-            if(epargneService.create(epargne)!=null){
+            clientRecuperer=(Customer)objectRecuperer;
+            Savings savings =new Savings();
+            savings.setNumCpt(ibanService.generate().toString());
+            savings.setClient(clientRecuperer);
+            savings.setTaux(taux);
+            if(epargneService.create(savings)!=null){
                 
                 //envoi de l'email au client
                 String nomDestinataire = "Moi";
                 String emailDestinataire = clientRecuperer.getEmail();
                 String messageEmail = "La bienvenue sur la plateforme PROXY BANQUE G6\n\nInformations concernant"
-                        + " votre compte epargne"
-                        + "\nIBAN : " + epargne.getNumCpt() + "\nDate d'ouverture : " + new Date() + "\nSolde : "
-                        + 0 + "\nTaux d'interet : "+epargne.getTaux();
-                String sujet = "Ouverture de compte courant";
+                        + " votre account savings"
+                        + "\nIBAN : " + savings.getNumCpt() + "\nDate d'ouverture : " + new Date() + "\nSolde : "
+                        + 0 + "\nTaux d'interet : "+ savings.getTaux();
+                String sujet = "Ouverture de account courant";
                 
                 //envoi du mail
                 sendEmailService.sendMyEmail(nomDestinataire, emailDestinataire, messageEmail, sujet);
                 
-                request.getSession().setAttribute("success", "Creation du compte epargne effectué avec succès");
+                request.getSession().setAttribute("success", "Creation du account savings effectué avec succès");
                 
                 
             }else{

@@ -80,8 +80,8 @@
                                         <img class="uni-avatar mx-auto d-block" th:src="@{https://res.cloudinary.com/dtpt8vqjj/image/upload/v1545155615/default-avatar.png}" alt="Card image cap"
                                              width="150px" height="150px">
                                         <h5 class="text-sm-center mt-2 mb-1">
-                                            <span th:text="${courant.client.prenom}"></span>
-                                            <span th:text="${courant.client.nom}"></span>
+                                            <span th:text="${current.client.prenom}"></span>
+                                            <span th:text="${current.client.nom}"></span>
                                         </h5>
                                         <div class="location text-sm-center">
                                             <i class="fa fa-map-marker"></i> Abidjan, Cote d'ivoire</div>
@@ -89,9 +89,9 @@
                                     <hr>
                                     <div class="card-text text-sm-center">
                                         <span class="float-left">
-                                            <strong>Telephone :</strong> <span th:text="${courant.client.tel}"></span>
+                                            <strong>Telephone :</strong> <span th:text="${current.client.tel}"></span>
                                             <br>
-                                            <strong>Email: </strong> <span th:text="${courant.client.email}"></span>
+                                            <strong>Email: </strong> <span th:text="${current.client.email}"></span>
                                             <br>
                                         </span>
                                         <span class="float-right">
@@ -113,13 +113,13 @@
                                     <li class="nav-item">
                                         <a class="nav-link active" data-toggle="tab" href="#home" role="tab">
                                             <span class="hidden-sm-up"></span>
-                                            <span class="hidden-xs-down">Compte courant</span>
+                                            <span class="hidden-xs-down">Compte current</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" data-toggle="tab" href="#profile" role="tab">
                                             <span class="hidden-sm-up"></span>
-                                            <span class="hidden-xs-down">Compte epargne</span>
+                                            <span class="hidden-xs-down">Compte savings</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -127,10 +127,10 @@
                                 <div class="tab-content tabcontent-border">
                                     <div class="tab-pane active" id="home" role="tabpanel">
                                         <div class="p-20">
-                                            <h5 class="card-title m-b-0">Informations concernant le compte</h5>
+                                            <h5 class="card-title m-b-0">Informations concernant le account</h5>
                                             <div class="form-group m-t-20">
-                                                <label style="color: red">Numero compte</label>
-                                                <input type="text" th:value="${courant.numCpt}"  id="disabledTextInput" class="form-control" placeholder="null"
+                                                <label style="color: red">Numero account</label>
+                                                <input type="text" th:value="${current.numCpt}"  id="disabledTextInput" class="form-control" placeholder="null"
                                                        disabled>
                                             </div>
 
@@ -138,17 +138,17 @@
                                                 <label>Date ouverture
 
                                                 </label>
-                                                <input th:value="${#calendars.format(courant.dateOuverture,'dd/MM/yyyy')}" type="text" class="form-control date-inputmask" id="date-mask"
+                                                <input th:value="${#calendars.format(current.dateOuverture,'dd/MM/yyyy')}" type="text" class="form-control date-inputmask" id="date-mask"
                                                        placeholder="Enter Date" disabled>
                                             </div>
                                             <div class="form-group m-t-20">
                                                 <label style="color: red">Decouvert</label>
-                                                <input th:value="${courant.montantInitial}" type="text" id="disabledTextInput" class="form-control" placeholder="null"
+                                                <input th:value="${current.montantInitial}" type="text" id="disabledTextInput" class="form-control" placeholder="null"
                                                        disabled>
                                             </div>
                                             <div class="form-group m-t-20">
                                                 <label style="color: red">Solde</label>
-                                                <input th:value="${courant.solde}" type="text" id="disabledTextInput" class="form-control" placeholder="null"
+                                                <input th:value="${current.solde}" type="text" id="disabledTextInput" class="form-control" placeholder="null"
                                                        disabled>
                                             </div>
 
@@ -158,9 +158,9 @@
                                     <div class="tab-pane  p-20" id="profile" role="tabpanel">
 
                                         <div class="p-20" id='infoepargne'>
-                                            <h5 class="card-title m-b-0">Informations concernant le compte epargne</h5>
+                                            <h5 class="card-title m-b-0">Informations concernant le account savings</h5>
                                             <div class="form-group m-t-20">
-                                                <label style="color: red">Numero compte</label>
+                                                <label style="color: red">Numero account</label>
                                                 <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input"
                                                        disabled>
                                             </div>
@@ -188,14 +188,14 @@
 
                                         <div th:if="!${epargnes}" class="p-20 text-center">
 
-                                            <h5 class="card-title m-b-0 text-center">Veuillez ajouter un compte epargne
+                                            <h5 class="card-title m-b-0 text-center">Veuillez ajouter un account savings
                                                 s'il vous plait</h5>
 
                                             <div>
                                                 <br>
-                                                <a th:href="${'/epargne/'+courant.client.id}">
+                                                <a th:href="${'/savings/'+current.client.id}">
                                                     <button type="button" id="to-liste" class="btn btn-outline-success">Nouveau
-                                                        compte</button>
+                                                        account</button>
                                                 </a>
 
                                             </div>
@@ -205,9 +205,9 @@
                                         </div>
 
 
-                                        <!--liste des comptes epargnes-->
+                                        <!--liste des accounts epargnes-->
                                         <div th:if="${epargnes}" class="p-20">
-                                            <h5 class="card-title m-b-0">Liste des comptes epargnes</h5>
+                                            <h5 class="card-title m-b-0">Liste des accounts epargnes</h5>
                                             <br>
                                             <table class="table">
                                                 <thead>
@@ -217,8 +217,8 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr th:each="epargne :${epargnes}">
-                                                        <td th:text="${epargne.numCpt}">N° 5678678687HJG</td>
+                                                    <tr th:each="savings :${epargnes}">
+                                                        <td th:text="${savings.numCpt}">N° 5678678687HJG</td>
                                                         <td>
                                                             <button type="button" id="to-info" class="btn btn-outline-success">Voir</button>
                                                         </td>
@@ -287,33 +287,33 @@
                                 <div class="card-body">
                                     <h4 class="card-title m-b-0">Mes virements</h4>
                                 </div>
-                                <ul th:if="${virementsrecu}" th:each="virement :${virementsrecu}" class="list-style-none">
+                                <ul th:if="${virementsrecu}" th:each="transfer :${virementsrecu}" class="list-style-none">
                                     <li class="card-body border-top">
                                         <a href="#" class="m-b-0 p-0">
                                             <div class="d-flex no-block">
                                                 <i class="fa fa-check-circle w-30px m-t-5"></i>
                                                 <div>
-                                                    <span th:text="${virement.montant}" class="font-bold">montant</span>
+                                                    <span th:text="${transfer.montant}" class="font-bold">montant</span>
                                                     <span> FCFA</span> reçu le 
-                                                    <span th:text="${#calendars.format(virement.dateCreation,'dd/MM/yyyy')}"></span>
+                                                    <span th:text="${#calendars.format(transfer.dateCreation,'dd/MM/yyyy')}"></span>
                                                     <span> à </span>
-                                                    <span th:text="${#calendars.format(virement.dateCreation,'HH:mm')}"></span>
+                                                    <span th:text="${#calendars.format(transfer.dateCreation,'HH:mm')}"></span>
                                                 </div>
                                             </div>
                                         </a>
                                     </li>
                                 </ul>
-                                <ul th:if="${virementsenvoye}" th:each="virement :${virementsenvoye}" class="list-style-none">
+                                <ul th:if="${virementsenvoye}" th:each="transfer :${virementsenvoye}" class="list-style-none">
                                     <li class="card-body border-top">
                                         <a href="#" class="m-b-0 p-0">
                                             <div class="d-flex no-block">
                                                 <i class="fa fa-check-circle w-30px m-t-5"></i>
                                                 <div>
-                                                    <span th:text="${virement.montant}" class="font-bold">montant</span>
+                                                    <span th:text="${transfer.montant}" class="font-bold">montant</span>
                                                     <span> FCFA</span> envoyé le  
-                                                    <span th:text="${#calendars.format(virement.dateCreation,'dd/MM/yyyy')}"></span>
+                                                    <span th:text="${#calendars.format(transfer.dateCreation,'dd/MM/yyyy')}"></span>
                                                     <span> à </span>
-                                                    <span th:text="${#calendars.format(virement.dateCreation,'HH:mm')}"></span>
+                                                    <span th:text="${#calendars.format(transfer.dateCreation,'HH:mm')}"></span>
                                                 </div>
                                             </div>
                                         </a>
@@ -325,7 +325,7 @@
                                             <div class="d-flex no-block">
                                                 <i class="fa fa-plus w-30px m-t-5"></i>
                                                 <div>
-                                                    <p>Aucun virement reçu</p>
+                                                    <p>Aucun transfer reçu</p>
                                                 </div>
                                             </div>
                                         </a>
@@ -337,7 +337,7 @@
                                             <div class="d-flex no-block">
                                                 <i class="fa fa-plus w-30px m-t-5"></i>
                                                 <div>
-                                                    <p>Aucun virement envoyé</p>
+                                                    <p>Aucun transfer envoyé</p>
                                                 </div>
                                             </div>
                                         </a>

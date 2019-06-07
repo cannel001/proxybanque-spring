@@ -41,14 +41,14 @@
                 <div class="page-breadcrumb">
                     <div class="row">
                         <div class="col-12 d-flex no-block align-items-center">
-                            <h4 class="page-title">Formulaire du compte epargne</h4>
+                            <h4 class="page-title">Formulaire du account savings</h4>
                             <div class="ml-auto text-right">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item">
                                             <a th:href="@{/}">Tableau de bord</a>
                                         </li>
-                                        <li class="breadcrumb-item active" aria-current="page">Nouveau compte epargne</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Nouveau account savings</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -67,14 +67,14 @@
                     <!-- ============================================================== -->
                     <div class="card">
                         <div class="card-body wizard-content">
-                            <h4 class="card-title">Information concernant le compte epargne de
+                            <h4 class="card-title">Information concernant le account savings de
                                 <span th:text="${clientrecup.nom}"></span> 
                                 <span th:text="${clientrecup.prenom}"></span>
                             </h4>
                             <h6 class="card-subtitle"></h6>
-                            <form id="example-form" th:action="@{/epargne/save}" method="post" class="m-t-40">
+                            <form id="example-form" th:action="@{/savings/save}" method="post" class="m-t-40">
                                 <div>
-                                    <h3>Nouveau compte epargne</h3>
+                                    <h3>Nouveau account savings</h3>
                                     <section>
                                         <label for="taux">Taux</label>
                                         <input id="taux" name="taux" type="number" class="required form-control">

@@ -5,13 +5,8 @@
  */
 package ci.proxybanquespring.controllers;
 
-import ci.proxybanquespring.domaine.Client;
-import ci.proxybanquespring.domaine.Conseiller;
-import ci.proxybanquespring.domaine.Courant;
-import ci.proxybanquespring.domaine.Epargne;
-import ci.proxybanquespring.domaine.Retraits;
-import ci.proxybanquespring.domaine.Versement;
-import ci.proxybanquespring.domaine.Virement;
+import ci.proxybanquespring.domaine.*;
+import ci.proxybanquespring.domaine.Advisor;
 import ci.proxybanquespring.service.IClientService;
 import ci.proxybanquespring.service.IConseillerService;
 import ci.proxybanquespring.service.ICourantService;
@@ -22,7 +17,6 @@ import ci.proxybanquespring.service.IVersementService;
 import ci.proxybanquespring.service.IVirementService;
 import ci.proxybanquespring.service.impl.IbanCiService;
 import java.security.Principal;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
@@ -83,46 +77,31 @@ public class ClientController {
             request.getSession().removeAttribute("failure");
         }
         
-        m.addAttribute("courant", new Courant());
+        m.addAttribute("courant", new Current());
         
         return "client/formulaireclient";
     }
     
     @PostMapping(value = "/save")
-    public String saveClient(Courant courant,Model m,Principal p){
+    public String saveClient(Current current, Model m, Principal p){
         
         //recuperation du l'user connecté
-        Conseiller conseiller=conseillerService.readOneByEmail(p.getName());
+        Advisor advisor =conseillerService.readOneByEmail(p.getName());
         
         //recuperer le client
-        Client c=courant.getClient();
+        Customer c= current.getClient();
         
         //enregistrement du client
-        c.setConseiller(conseiller);
+        c.setAdvisor(advisor);
         
+        Customer clientRetourne=clientService.create(c);
         
-        Client clientRetourne=clientService.create(c);
         if(clientRetourne!=null){
             
-            //enregistrement du compte courant
-            courant.setClient(clientRetourne);
-            courant.setSolde(courant.getMontantInitial());
-            courant.setNumCpt(ibanCiService.generate().toString());
+            //enregistrement du account current
+            current.setClient(clientRetourne);
 
-            if(courantService.create(courant)!=null){
-                
-                //envoi de l'email au client
-                String nomDestinataire = "Moi";
-                String emailDestinataire = clientRetourne.getEmail();
-                String messageEmail = "La bienvenue sur la plateforme PROXY BANQUE G6\n\nInformations concernant"
-                        + " votre compte courant"
-                        + "\nIBAN : " + courant.getNumCpt() + "\nDate d'ouverture : " + new Date() + "\nMontant : "
-                        + courant.getMontantInitial() + "\nSolde : "
-                        + courant.getSolde();
-                String sujet = "Ouverture de compte courant";
-                
-                //envoi du mail
-                sendEmailService.sendMyEmail(nomDestinataire, emailDestinataire, messageEmail, sujet);
+            if(courantService.create(current)!=null){
                 
                 return "redirect:/client/formclient";
             }
@@ -147,44 +126,44 @@ public class ClientController {
         }
         
         //les proprietes
-        Optional<List<Courant>> maListe=null;        
-        List<Epargne> listEpargne;
+        Optional<List<Current>> maListe=null;
+        List<Savings> listSavings;
         
         //rechercher le client par id
-        Optional<Client> client=Optional.of(clientService.readOne(id));
+        Optional<Customer> client=Optional.of(clientService.readOne(id));
                 
-        //rechercher le compte courant du client
+        //rechercher le account courant du client
         if(client.isPresent()){
             //recuperation des versements par ce client
-            List<Versement> listVersement=versementService.readAllVersementByClient(client.get().getId());
-            if(!listVersement.isEmpty()){
-                m.addAttribute("versements", listVersement);
+            List<Payment> listPayment =versementService.readAllVersementByClient(client.get().getId());
+            if(!listPayment.isEmpty()){
+                m.addAttribute("versements", listPayment);
             }
             
             //recuperation des retraits effectués par ce client
-            List<Retraits> listRetraits=retraitService.readAllRetraitByClient(client.get().getId());
+            List<WithDrawal> listRetraits=retraitService.readAllRetraitByClient(client.get().getId());
             if(!listRetraits.isEmpty()){
                 m.addAttribute("retraits", listRetraits);
             }
             
             //recuperation des virements recu par ce client
-            List<Virement> listVirementRecu=virementService.readAllVirementByClientAndVerser(client.get().getId());
-            if(!listVirementRecu.isEmpty()){
-                m.addAttribute("virementsrecu", listVirementRecu);
+            List<Transfer> listTransferRecu =virementService.readAllVirementByClientAndVerser(client.get().getId());
+            if(!listTransferRecu.isEmpty()){
+                m.addAttribute("virementsrecu", listTransferRecu);
             }
             
             //recuperation des virements envoyé par ce client
-            List<Virement> listVirementEnvoye=virementService.readAllVirementByClientAndRetirer(client.get().getId());
-            if(!listVirementEnvoye.isEmpty()){
-                m.addAttribute("virementsenvoye", listVirementEnvoye);
+            List<Transfer> listTransferEnvoye =virementService.readAllVirementByClientAndRetirer(client.get().getId());
+            if(!listTransferEnvoye.isEmpty()){
+                m.addAttribute("virementsenvoye", listTransferEnvoye);
             }
             
             maListe=Optional.of(courantService.readAllParClient(client.get().getId()));
             
-            //recherche et recuperation des comptes epargnes du client
-            listEpargne=epargneService.readAllParClient(client.get().getId());
-            if(!listEpargne.isEmpty()){
-                m.addAttribute("epargnes", listEpargne);
+            //recherche et recuperation des accounts epargnes du client
+            listSavings =epargneService.readAllParClient(client.get().getId());
+            if(!listSavings.isEmpty()){
+                m.addAttribute("epargnes", listSavings);
             }
             
         }

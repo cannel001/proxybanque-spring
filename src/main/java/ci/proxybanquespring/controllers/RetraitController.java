@@ -5,9 +5,9 @@
  */
 package ci.proxybanquespring.controllers;
 
-import ci.proxybanquespring.domaine.Courant;
-import ci.proxybanquespring.domaine.Epargne;
-import ci.proxybanquespring.domaine.Retraits;
+import ci.proxybanquespring.domaine.Current;
+import ci.proxybanquespring.domaine.Savings;
+import ci.proxybanquespring.domaine.WithDrawal;
 import ci.proxybanquespring.service.ICourantService;
 import ci.proxybanquespring.service.IEpargneService;
 import ci.proxybanquespring.service.IOperationService;
@@ -55,15 +55,15 @@ public class RetraitController {
             request.getSession().removeAttribute("failure");
         }
 
-        m.addAttribute("retrait", new Retraits());
+        m.addAttribute("retrait", new WithDrawal());
 
         return "retrait/formretrait.html";
     }
 
     @PostMapping(value = "/save")
-    public String saveRetrait(Retraits r, Model m, Principal p, HttpServletRequest request) {
+    public String saveRetrait(WithDrawal r, Model m, Principal p, HttpServletRequest request) {
 
-        //verifier si le compte existe
+        //verifier si le account existe
         String numCpt = request.getParameter("numCpt");
         String typCompte = operationService.typeCompte(numCpt);
 
@@ -71,7 +71,7 @@ public class RetraitController {
 
             //verification du solde
             if (!operationService.verifSolde(numCpt, r.getMontant())) {
-                request.getSession().setAttribute("failure", "Le solde de ce compte est inferieur au montant à retirer");
+                request.getSession().setAttribute("failure", "Le solde de ce account est inferieur au montant à retirer");
                 return "redirect:/retrait";
             }
 
@@ -79,30 +79,30 @@ public class RetraitController {
             r.setNumOperation(operationService.generateNumTransc());
             r.setDateOperation(new Date());
 
-            //recuperation du compte
-            if (typCompte.equals("Courant")) {
-                Courant courantRecup = courantService.readOne(numCpt);
-                r.setCompte(courantRecup);
+            //recuperation du account
+            if (typCompte.equals("Current")) {
+                Current currentRecup = courantService.readOne(numCpt);
+                r.setAccount(currentRecup);
                 //ajout de l'ancien et nouveau solde
-                r.setAncienSolde(courantRecup.getSolde());
-                r.setNouveauSolde(courantRecup.getSolde() - r.getMontant());
-                r.setNote("Retrait à partir du compte courant " + courantRecup.getNumCpt());
+                r.setAncienSolde(currentRecup.getSolde());
+                r.setNouveauSolde(currentRecup.getSolde() - r.getMontant());
+                r.setNote("Retrait à partir du account courant " + currentRecup.getNumCpt());
                 //mise a jour du solde
-                courantRecup.setSolde(courantRecup.getSolde() - r.getMontant());
-                courantService.update(courantRecup);
+                currentRecup.setSolde(currentRecup.getSolde() - r.getMontant());
+                courantService.update(currentRecup);
             } else {
-                Epargne epargneRecup = epargneService.readOne(numCpt);
-                r.setCompte(epargneRecup);
+                Savings savingsRecup = epargneService.readOne(numCpt);
+                r.setAccount(savingsRecup);
                 //ajout de l'ancien et nouveau solde
-                r.setAncienSolde(epargneRecup.getSolde());
-                r.setNouveauSolde(epargneRecup.getSolde() - r.getMontant());
-                r.setNote("Retrait à partir du compte epargne " + epargneRecup.getNumCpt());
+                r.setAncienSolde(savingsRecup.getSolde());
+                r.setNouveauSolde(savingsRecup.getSolde() - r.getMontant());
+                r.setNote("Retrait à partir du account epargne " + savingsRecup.getNumCpt());
                 //mise a jour du solde
-                epargneRecup.setSolde(epargneRecup.getSolde() - r.getMontant());
-                epargneService.update(epargneRecup);
+                savingsRecup.setSolde(savingsRecup.getSolde() - r.getMontant());
+                epargneService.update(savingsRecup);
             }
 
-            Retraits retraitRetournee = retraitsService.create(r);
+            WithDrawal retraitRetournee = retraitsService.create(r);
 
             if (retraitRetournee != null) {
                 request.getSession().setAttribute("success", "Operation effectuée avec succès");
@@ -112,7 +112,7 @@ public class RetraitController {
             }
 
         } else {
-            request.getSession().setAttribute("failure", "Operation echouée car le compte " + numCpt + " n'existe pas");
+            request.getSession().setAttribute("failure", "Operation echouée car le account " + numCpt + " n'existe pas");
         }
 
         return "redirect:/retrait";

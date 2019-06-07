@@ -41,14 +41,14 @@
                 <div class="page-breadcrumb">
                     <div class="row">
                         <div class="col-12 d-flex no-block align-items-center">
-                            <h4 class="page-title">Formulaire virement</h4>
+                            <h4 class="page-title">Formulaire transfer</h4>
                             <div class="ml-auto text-right">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item">
                                             <a th:href="@{/}">Tableau de bord</a>
                                         </li>
-                                        <li class="breadcrumb-item active" aria-current="page">Formulaire virement</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Formulaire transfer</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -72,14 +72,14 @@
                     <!-- ============================================================== -->
                     <div class="card">
                         <div class="card-body wizard-content">
-                            <h4 class="card-title">Information concernant le virement</h4>
+                            <h4 class="card-title">Information concernant le transfer</h4>
                             <h6 class="card-subtitle"></h6>
-                            <form id="example-form" th:action="@{/virement/save}" method="post" class="m-t-40">
+                            <form id="example-form" th:action="@{/transfer/save}" method="post" class="m-t-40">
                                 <div>
                                     <h3>Virement</h3>
 
                                     <section>
-                                        <label for="numeroComptedebite">Numero compte debité *</label>
+                                        <label for="numeroComptedebite">Numero account debité *</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="basic-addon1">#</span>
@@ -88,7 +88,7 @@
                                         </div>
 
                                         <br>
-                                        <label for="cptCrediter">Numero compte credité *</label>
+                                        <label for="cptCrediter">Numero account credité *</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="basic-addon1">#</span>

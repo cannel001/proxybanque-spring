@@ -5,7 +5,6 @@
  */
 package ci.proxybanquespring.service.impl;
 
-import ci.proxybanquespring.domaine.Epargne;
 import ci.proxybanquespring.repository.OperationRepository;
 import ci.proxybanquespring.service.IEpargneService;
 import ci.proxybanquespring.service.IOperationService;
@@ -50,9 +49,9 @@ public class OperationService implements IOperationService {
 
         if (!"".equals(numeroCpt)) {
             if (courantService.readOne(numeroCpt) != null) {
-                return "Courant";
+                return "Current";
             } else if (epargneService.readOne(numeroCpt) != null) {
-                return "Epargne";
+                return "Savings";
             }
         }
 
@@ -66,11 +65,11 @@ public class OperationService implements IOperationService {
         String typCompte = typeCompte(cpt);
 
         if (!"".equals(typCompte)) {
-            if (typCompte.equals("Courant")) {
+            if (typCompte.equals("Current")) {
                 if (courantService.readOne(cpt).getSolde() >= montant) {
                     return true;
                 }
-            } else if (typCompte.equals("Epargne")) {
+            } else if (typCompte.equals("Savings")) {
                 if (epargneService.readOne(cpt).getSolde() >= montant) {
                     return true;
                 }

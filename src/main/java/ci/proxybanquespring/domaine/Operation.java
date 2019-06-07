@@ -6,9 +6,8 @@
 package ci.proxybanquespring.domaine;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,28 +15,31 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 /**
  *
  * @author Seka Cannel Ulrich Evrard
  *
- * Cette classe represente une operation, elle implemente l'interface
- * Serializable
+ * This class represents an operation, it implements serializable interface
  *
  */
-@Entity(name = "Operation")
+@Entity
 @Table(name = "operation")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Operation implements Serializable {
 
@@ -46,61 +48,76 @@ public abstract class Operation implements Serializable {
     private Long numOperation;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "dateOperation")
-    private Date dateOperation;
+    @Column(name = "operationDate")
+    private Date operationDate;
 
-    @Column(name = "montant")
-    private Double montant;
+    @Column(name = "amount")
+    private Double amount;
 
+    @Column(name = "note")
     private String note;
 
-    private Double ancienSolde;
+    @Column(name = "oldBalance")
+    private Double oldBalance;
 
-    private Double nouveauSolde;
+    @Column(name = "newBalance")
+    private Double newBalance;
 
-    private String devise;
+    @Column(name = "currency")
+    private String currency;
 
-    @Column(name = "agence")
-    private String agence;
+    @Column(name = "agency")
+    private String agency;
 
-    @Column(name = "caisse")
-    private String caisse;
+    @Column(name = "cashRegister")
+    private String cashRegister;
 
-    @NotNull
+    @Column(name = "enabled")
     private Boolean enabled;
 
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateCreation;
+    @CreatedBy
+    @Column(name = "createdBy", updatable = false, length = 20)
+    @JsonIgnore
+    private String createdBy;
 
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateUpdate;
+    @CreatedDate
+    @Column(name = "createdDate", updatable = false)
+    @JsonIgnore
+    private Instant createdDate;
 
-    private Long idUser;
+    @LastModifiedBy
+    @Column(name = "lastModfiedBy", length = 20)
+    @JsonIgnore
+    private String lastModifiedBy;
+
+    @LastModifiedDate
+    @Column(name = "lastModifiedDate")
+    @JsonIgnore
+    private Instant lastModifiedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "compte_id")
-    private Compte compte;
+    private Account account;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(name = "Billetages")
-    private Set<Billetage> billetages;
-
-    //constructeur
-    public Operation(Long numOperation, Date dateOperation, Double montant, String note, Double ancienSolde, Double nouveauSolde, String devise, Long idUser, Compte compte) {
+    /**
+     * this method represents the constructor of operation with all parameters
+     * @param numOperation
+     * @param operationDate
+     * @param amount
+     * @param note
+     * @param oldBalance
+     * @param newBalance
+     * @param currency
+     * @param account
+     */
+    public Operation(Long numOperation, Date operationDate, Double amount, String note, Double oldBalance, Double newBalance, String currency, Account account) {
         this.numOperation = numOperation;
-        this.dateOperation = dateOperation;
-        this.montant = montant;
+        this.operationDate = operationDate;
+        this.amount = amount;
         this.note = note;
-        this.ancienSolde = ancienSolde;
-        this.nouveauSolde = nouveauSolde;
-        this.devise = devise;
-        this.idUser = idUser;
-        this.compte = compte;
+        this.oldBalance = oldBalance;
+        this.newBalance = newBalance;
+        this.currency = currency;
+        this.account = account;
     }
-
-    public Operation() {
-    }
-
 }

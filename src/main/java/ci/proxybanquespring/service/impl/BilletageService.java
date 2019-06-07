@@ -5,8 +5,6 @@
  */
 package ci.proxybanquespring.service.impl;
 
-import ci.proxybanquespring.domaine.Billetage;
-import ci.proxybanquespring.domaine.Client;
 import ci.proxybanquespring.repository.BilletageRepository;
 import ci.proxybanquespring.service.IBilletageService;
 import java.util.Date;

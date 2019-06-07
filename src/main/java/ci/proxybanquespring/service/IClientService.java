@@ -5,9 +5,9 @@
  */
 package ci.proxybanquespring.service;
 
-import ci.proxybanquespring.domaine.Client;
-import ci.proxybanquespring.domaine.Conseiller;
-import java.util.Date;
+import ci.proxybanquespring.domaine.Advisor;
+import ci.proxybanquespring.domaine.Customer;
+
 import java.util.List;
 
 /**
@@ -16,16 +16,16 @@ import java.util.List;
  */
 public interface IClientService {
     
-    public List<Client> readAllByConseiller(Conseiller conseiller);
+    public List<Customer> readAllByConseiller(Advisor advisor);
     
-    public Client create(Client t) ;
+    public Customer create(Customer t) ;
 
-    public List<Client> readAll();
+    public List<Customer> readAll();
 
-    public Client readOne(Long pk);
+    public Customer readOne(Long pk);
 
-    public Client update(Client t);
+    public Customer update(Customer t);
 
-    public Boolean delete(Client t);
+    public Boolean delete(Customer t);
     
 }

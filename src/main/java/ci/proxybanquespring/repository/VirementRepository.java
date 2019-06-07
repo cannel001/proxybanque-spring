@@ -5,8 +5,9 @@
  */
 package ci.proxybanquespring.repository;
 
-import ci.proxybanquespring.domaine.Client;
-import ci.proxybanquespring.domaine.Virement;
+import ci.proxybanquespring.domaine.Customer;
+import ci.proxybanquespring.domaine.Transfer;
+
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,12 +15,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author willi
  */
-public interface VirementRepository extends JpaRepository<Virement, Long>{
+public interface VirementRepository extends JpaRepository<Transfer, Long>{
     
-    public Virement findByNumOperationAndEnabledTrue(Long numOperation);
-    public List<Virement> findByEnabledTrue();
-    public Virement findByReferenceAndTypVirementAndEnabledTrue(Long reference,String typVirement);
-    public List<Virement> findByCompteClientAndEnabledTrue(Client c);
-    public List<Virement> findByCompteClientAndEnabledTrueAndTypVirement(Client c,String typVirement);
+    public Transfer findByNumOperationAndEnabledTrue(Long numOperation);
+    public List<Transfer> findByEnabledTrue();
+    public Transfer findByReferenceAndTypVirementAndEnabledTrue(Long reference, String typVirement);
+    public List<Transfer> findByCompteClientAndEnabledTrue(Customer c);
+    public List<Transfer> findByCompteClientAndEnabledTrueAndTypVirement(Customer c, String typVirement);
     
 }

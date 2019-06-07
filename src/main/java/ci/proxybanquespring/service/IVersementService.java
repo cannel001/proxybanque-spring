@@ -5,8 +5,8 @@
  */
 package ci.proxybanquespring.service;
 
-import ci.proxybanquespring.domaine.Versement;
-import java.util.Date;
+import ci.proxybanquespring.domaine.Payment;
+
 import java.util.List;
 
 /**
@@ -15,18 +15,18 @@ import java.util.List;
  */
 public interface IVersementService {
 
-    public List<Versement> readAllVersementByClient(Long idClient);
+    public List<Payment> readAllVersementByClient(Long idClient);
 
-    public List<Versement> readAllVersementParCompte(String compte);
+    public List<Payment> readAllVersementParCompte(String compte);
 
-    public Versement create(Versement t);
+    public Payment create(Payment t);
 
-    public List<Versement> readAll();
+    public List<Payment> readAll();
 
-    public Versement readOne(Long pk);
+    public Payment readOne(Long pk);
 
-    public Versement update(Versement t);
+    public Payment update(Payment t);
 
-    public Boolean delete(Versement t);
+    public Boolean delete(Payment t);
 
 }

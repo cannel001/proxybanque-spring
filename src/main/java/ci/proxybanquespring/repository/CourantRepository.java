@@ -5,9 +5,8 @@
  */
 package ci.proxybanquespring.repository;
 
-import ci.proxybanquespring.domaine.Client;
-import ci.proxybanquespring.domaine.Conseiller;
-import ci.proxybanquespring.domaine.Courant;
+import ci.proxybanquespring.domaine.Customer;
+import ci.proxybanquespring.domaine.Current;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,10 +14,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author willi
  */
-public interface CourantRepository extends JpaRepository<Courant, String>{
+public interface CourantRepository extends JpaRepository<Current, String>{
     
-    public Courant findByNumCptAndEnabledTrue(String numCpt);
-    public List<Courant> findByClientAndEnabledTrue(Client client);
-    public List<Courant> findByEnabledTrue();
+    public Current findByNumCptAndEnabledTrue(String numCpt);
+    public List<Current> findByClientAndEnabledTrue(Customer client);
+    public List<Current> findByEnabledTrue();
     
 }

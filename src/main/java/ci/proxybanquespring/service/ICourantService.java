@@ -5,8 +5,8 @@
  */
 package ci.proxybanquespring.service;
 
-import ci.proxybanquespring.domaine.Courant;
-import java.util.Date;
+import ci.proxybanquespring.domaine.Current;
+
 import java.util.List;
 
 /**
@@ -15,22 +15,20 @@ import java.util.List;
  */
 public interface ICourantService {
 
-    public String generateNumeroCompte();
-
     public Boolean verifNumeroCompte(String numero);
 
-    public List<Courant> readAllParClient(Long idClient);
+    public List<Current> readAllParClient(Long idClient);
 
     public int countByConseiller(String email);
 
-    public Courant create(Courant t);
+    public Current create(Current t);
 
-    public List<Courant> readAll();
+    public List<Current> readAll();
 
-    public Courant readOne(String pk);
+    public Current readOne(String pk);
 
-    public Courant update(Courant t);
+    public Current update(Current t);
 
-    public Boolean delete(Courant t);
+    public Boolean delete(Current t);
 
 }

@@ -69,7 +69,7 @@
                         <div class="card-body wizard-content">
                             <h4 class="card-title">Information concernant le client</h4>
                             <h6 class="card-subtitle"></h6>
-                            <form th:object="${courant}" id="example-form" th:action="@{/client/save}" method="post" class="m-t-40">
+                            <form th:object="${current}" id="example-form" th:action="@{/client/save}" method="post" class="m-t-40">
                                 <div>
                                     <h3>Profile</h3>
                                     <section>
@@ -85,7 +85,7 @@
                                         <input id="address" name="tel" type="number" th:field="*{client.tel}" class=" form-control">
                                         <p>(*) Obligatoire</p>
                                     </section>
-                                    <h3>Nouveau compte courant</h3>
+                                    <h3>Nouveau account current</h3>
                                     <section>
                                         <label for="name">Date d'ouverture *</label>
                                         <input id="name" name="name" th:field="*{dateOuverture}" type="date" class="required form-control">

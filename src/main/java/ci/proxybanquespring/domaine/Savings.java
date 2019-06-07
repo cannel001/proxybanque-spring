@@ -9,27 +9,35 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 
 /**
  *
  * @author Seka Cannel Ulrich Evrard
  *
- * Cette classe represente un epargne, elle herite de la classe Compte
+ * This class represents a savings, it implements serialzable interface
  *
  */
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @DiscriminatorValue(value = "compte_epargne")
-public class Epargne extends Compte {
+public class Savings extends Account {
 
-    @Column(name = "taux")
-    private Float taux;
+    @Column(name = "rate")
+    private Float rate;
 
-    public Epargne(Date dateOuverture, Double solde, Client client) {
-        super(dateOuverture, solde, client);
+    /**
+     * this method represents the constructor of savings with all parameters
+     * @param openDate
+     * @param balance
+     * @param customer
+     */
+    public Savings(Date openDate, Double balance, Customer customer) {
+        super(openDate, balance, customer);
     }
 
 }

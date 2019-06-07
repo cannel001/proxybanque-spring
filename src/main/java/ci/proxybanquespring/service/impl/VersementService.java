@@ -5,8 +5,8 @@
  */
 package ci.proxybanquespring.service.impl;
 
-import ci.proxybanquespring.domaine.Client;
-import ci.proxybanquespring.domaine.Versement;
+import ci.proxybanquespring.domaine.Customer;
+import ci.proxybanquespring.domaine.Payment;
 import ci.proxybanquespring.repository.VersementRepository;
 import ci.proxybanquespring.service.IVersementService;
 import java.util.Date;
@@ -35,10 +35,10 @@ public class VersementService implements IVersementService {
     private CourantService courantService;
 
     @Override
-    public List<Versement> readAllVersementByClient(Long idClient) {
+    public List<Payment> readAllVersementByClient(Long idClient) {
 
         if (idClient > 0) {
-            Client client = clientService.readOne(idClient);
+            Customer client = clientService.readOne(idClient);
             if(client!=null){
                 return versementRepository.findByCompteClientAndEnabledTrue(client);
             }
@@ -48,10 +48,10 @@ public class VersementService implements IVersementService {
     }
 
     @Override
-    public List<Versement> readAllVersementParCompte(String compte) {
+    public List<Payment> readAllVersementParCompte(String compte) {
 //
-//        if(!"".equals(compte)){
-//            return versementRepository.findByCompteAndStatut(compte, Boolean.TRUE)
+//        if(!"".equals(account)){
+//            return versementRepository.findByCompteAndStatut(account, Boolean.TRUE)
 //        }
 
         return null;
@@ -59,7 +59,7 @@ public class VersementService implements IVersementService {
     }
 
     @Override
-    public Versement create(Versement t) {
+    public Payment create(Payment t) {
 
         if (t != null) {
             t.setDateCreation(new Date());
@@ -72,14 +72,14 @@ public class VersementService implements IVersementService {
     }
 
     @Override
-    public List<Versement> readAll() {
+    public List<Payment> readAll() {
 
         return versementRepository.findByEnabledTrue();
 
     }
 
     @Override
-    public Versement readOne(Long pk) {
+    public Payment readOne(Long pk) {
 
         if (pk > 0) {
             return versementRepository.findByNumOperationAndEnabledTrue(pk);
@@ -89,7 +89,7 @@ public class VersementService implements IVersementService {
     }
 
     
-    public Versement update(Versement t) {
+    public Payment update(Payment t) {
 
         if (t != null) {
             t.setDateUpdate(new Date());
@@ -100,7 +100,7 @@ public class VersementService implements IVersementService {
     }
 
     @Override
-    public Boolean delete(Versement t) {
+    public Boolean delete(Payment t) {
 
         if (t != null) {
             t.setDateUpdate(new Date());

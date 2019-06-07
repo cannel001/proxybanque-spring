@@ -5,8 +5,8 @@
  */
 package ci.proxybanquespring.service;
 
-import ci.proxybanquespring.domaine.Virement;
-import java.util.Date;
+import ci.proxybanquespring.domaine.Transfer;
+
 import java.util.List;
 
 /**
@@ -15,30 +15,30 @@ import java.util.List;
  */
 public interface IVirementService {
 
-    public Boolean retirer(Virement virement);
+    public Boolean retirer(Transfer transfer);
     
-    public Boolean verser(Virement virement);
+    public Boolean verser(Transfer transfer);
 
     public Long virementCompteACompte(String cptDebit, String cptCredit, Double montant);
 
     public Boolean contrainteCompte(String cpt1, String cpt2);
 
-    public Virement create(Virement t);
+    public Transfer create(Transfer t);
 
-    public List<Virement> readAll();
+    public List<Transfer> readAll();
 
-    public Virement readOne(Long pk);
+    public Transfer readOne(Long pk);
 
-    public Virement update(Virement t);
+    public Transfer update(Transfer t);
 
-    public Boolean delete(Virement t);
+    public Boolean delete(Transfer t);
     
-    public Virement readOneVirementVireParRef(Long reference);
+    public Transfer readOneVirementVireParRef(Long reference);
     
-    public Virement readOneVirementRecuParRef(Long reference);
+    public Transfer readOneVirementRecuParRef(Long reference);
     
-    public List<Virement> readAllVirementByClientAndVerser(Long idClient);
+    public List<Transfer> readAllVirementByClientAndVerser(Long idClient);
     
-    public List<Virement> readAllVirementByClientAndRetirer(Long idClient);
+    public List<Transfer> readAllVirementByClientAndRetirer(Long idClient);
 
 }

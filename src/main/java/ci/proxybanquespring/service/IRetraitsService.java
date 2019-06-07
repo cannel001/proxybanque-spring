@@ -5,8 +5,8 @@
  */
 package ci.proxybanquespring.service;
 
-import ci.proxybanquespring.domaine.Retraits;
-import java.util.Date;
+import ci.proxybanquespring.domaine.WithDrawal;
+
 import java.util.List;
 
 /**
@@ -15,16 +15,16 @@ import java.util.List;
  */
 public interface IRetraitsService {
 
-    public Retraits create(Retraits t);
+    public WithDrawal create(WithDrawal t);
 
-    public List<Retraits> readAll();
+    public List<WithDrawal> readAll();
 
-    public Retraits readOne(Long numOperation);
+    public WithDrawal readOne(Long numOperation);
 
-    public Retraits update(Retraits t);
+    public WithDrawal update(WithDrawal t);
 
-    public Boolean delete(Retraits t);
+    public Boolean delete(WithDrawal t);
     
-    public List<Retraits> readAllRetraitByClient(Long idClient);
+    public List<WithDrawal> readAllRetraitByClient(Long idClient);
 
 }

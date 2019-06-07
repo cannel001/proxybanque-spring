@@ -5,8 +5,8 @@
  */
 package ci.proxybanquespring.service.impl;
 
-import ci.proxybanquespring.domaine.Client;
-import ci.proxybanquespring.domaine.Epargne;
+import ci.proxybanquespring.domaine.Customer;
+import ci.proxybanquespring.domaine.Savings;
 import ci.proxybanquespring.repository.EpargneRepository;
 import ci.proxybanquespring.service.IEpargneService;
 import java.util.Date;
@@ -47,10 +47,10 @@ public class EpargneService implements IEpargneService{
     }
 
     @Override
-    public List<Epargne> readAllParClient(Long idClient) {
+    public List<Savings> readAllParClient(Long idClient) {
 
         if (idClient > 0) {
-            Client client = clientService.readOne(idClient);
+            Customer client = clientService.readOne(idClient);
             return epargneRepository.findByClientAndEnabledTrue(client);
         }
         return null;
@@ -65,12 +65,12 @@ public class EpargneService implements IEpargneService{
         if (!"".equals(email)) {
             
             //recuperation de la liste de tous les clients
-            List<Client> listClient=clientService.readAllByConseiller(conseillerService.readOne(email));
+            List<Customer> listClient=clientService.readAllByConseiller(conseillerService.readOne(email));
             
-            //compter le nombre des comptes pour chaque clients si la liste des clients est different de null
+            //compter le nombre des accounts pour chaque clients si la liste des clients est different de null
             if(!listClient.isEmpty()){
                 
-                for (Client client : listClient) {
+                for (Customer client : listClient) {
                     if(!readAllParClient(client.getId()).isEmpty()){
                         cpt+=readAllParClient(client.getId()).size();
                     }
@@ -83,7 +83,7 @@ public class EpargneService implements IEpargneService{
     }
 
     @Override
-    public Epargne create(Epargne t) {
+    public Savings create(Savings t) {
 
         if (t != null) {
             t.setDateCreation(new Date());
@@ -96,14 +96,14 @@ public class EpargneService implements IEpargneService{
     }
 
     @Override
-    public List<Epargne> readAll() {
+    public List<Savings> readAll() {
 
         return epargneRepository.findByEnabledTrue();
 
     }
 
     
-    public Epargne readOne(String pk) {
+    public Savings readOne(String pk) {
 
         if (!"".equals(pk)) {
             return epargneRepository.findByNumCptAndEnabledTrue(pk);
@@ -113,7 +113,7 @@ public class EpargneService implements IEpargneService{
     }
 
     @Override
-    public Epargne update(Epargne t) {
+    public Savings update(Savings t) {
 
         if (t != null) {
             t.setDateUpdate(new Date());
@@ -124,7 +124,7 @@ public class EpargneService implements IEpargneService{
     }
 
     @Override
-    public Boolean delete(Epargne t) {
+    public Boolean delete(Savings t) {
 
         if (t != null) {
             t.setDateUpdate(new Date());

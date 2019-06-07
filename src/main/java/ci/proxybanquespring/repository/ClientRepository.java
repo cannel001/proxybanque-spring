@@ -5,8 +5,9 @@
  */
 package ci.proxybanquespring.repository;
 
-import ci.proxybanquespring.domaine.Client;
-import ci.proxybanquespring.domaine.Conseiller;
+import ci.proxybanquespring.domaine.Advisor;
+import ci.proxybanquespring.domaine.Customer;
+
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,10 +15,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author willi
  */
-public interface ClientRepository extends JpaRepository<Client, Long>{
+public interface ClientRepository extends JpaRepository<Customer, Long>{
     
-    public List<Client> findByConseillerAndEnabledTrue(Conseiller conseiller);
-    public Client findByIdAndEnabledTrue(Long id);
-    public List<Client> findByEnabledTrue();
+    public List<Customer> findByConseillerAndEnabledTrue(Advisor advisor);
+    public Customer findByIdAndEnabledTrue(Long id);
+    public List<Customer> findByEnabledTrue();
     
 }

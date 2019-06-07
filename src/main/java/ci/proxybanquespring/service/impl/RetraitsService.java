@@ -5,8 +5,8 @@
  */
 package ci.proxybanquespring.service.impl;
 
-import ci.proxybanquespring.domaine.Client;
-import ci.proxybanquespring.domaine.Retraits;
+import ci.proxybanquespring.domaine.Customer;
+import ci.proxybanquespring.domaine.WithDrawal;
 import ci.proxybanquespring.repository.RetraitsRepository;
 import ci.proxybanquespring.service.IClientService;
 import ci.proxybanquespring.service.IRetraitsService;
@@ -30,7 +30,7 @@ public class RetraitsService implements IRetraitsService{
     private IClientService clientService;
     
     @Override
-     public Retraits create(Retraits t) {
+     public WithDrawal create(WithDrawal t) {
 
         if (t != null) {
             t.setDateCreation(new Date());
@@ -43,14 +43,14 @@ public class RetraitsService implements IRetraitsService{
     }
 
      @Override
-    public List<Retraits> readAll() {
+    public List<WithDrawal> readAll() {
 
         return repository.findByEnabledTrue();
 
     }
 
     @Override
-    public Retraits readOne(Long numOperation) {
+    public WithDrawal readOne(Long numOperation) {
 
         if (numOperation > 0) {
             return repository.findByNumOperationAndEnabledTrue(numOperation);
@@ -60,7 +60,7 @@ public class RetraitsService implements IRetraitsService{
     }
 
     @Override
-    public Retraits update(Retraits t) {
+    public WithDrawal update(WithDrawal t) {
 
         if (t != null) {
             t.setDateUpdate(new Date());
@@ -71,7 +71,7 @@ public class RetraitsService implements IRetraitsService{
     }
 
     @Override
-    public Boolean delete(Retraits t) {
+    public Boolean delete(WithDrawal t) {
 
         if (t != null) {
             t.setDateUpdate(new Date());
@@ -83,10 +83,10 @@ public class RetraitsService implements IRetraitsService{
     }
 
     @Override
-    public List<Retraits> readAllRetraitByClient(Long idClient) {
+    public List<WithDrawal> readAllRetraitByClient(Long idClient) {
 
         if (idClient > 0) {
-            Client client = clientService.readOne(idClient);
+            Customer client = clientService.readOne(idClient);
             if(client!=null){
                 return repository.findByCompteClientAndEnabledTrue(client);
             }

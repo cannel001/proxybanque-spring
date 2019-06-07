@@ -27,7 +27,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" th:href="@{/virement}"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" th:href="@{/transfer}"
                        aria-expanded="false">
                         <!--<i class="fab fa-table"></i>-->
                         <span class="hide-menu">Virement</span>
@@ -52,7 +52,7 @@
                 <li th:if="${nbClients}" class="sidebar-item slideInfo hide-menu">
                     <span class="sidebar-link" aria-expanded="false">
                         <!--<i class="fab fa-table"></i>-->
-                        <span class="hide-menu">Nombre de comptes :</span>
+                        <span class="hide-menu">Nombre de accounts :</span>
                         <span th:text="${nbCompte}" class="badge badge-pill badge-danger small" style="margin-left: 5px;">0</span>
                     </span>
                 </li>

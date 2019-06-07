@@ -5,8 +5,8 @@
  */
 package ci.proxybanquespring.repository;
 
-import ci.proxybanquespring.domaine.Client;
-import ci.proxybanquespring.domaine.Retraits;
+import ci.proxybanquespring.domaine.Customer;
+import ci.proxybanquespring.domaine.WithDrawal;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,12 +14,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author willi
  */
-public interface RetraitsRepository extends JpaRepository<Retraits, Long>{
+public interface RetraitsRepository extends JpaRepository<WithDrawal, Long>{
     
-    public Retraits findByNumOperationAndEnabledTrue(Long numOperation);
+    public WithDrawal findByNumOperationAndEnabledTrue(Long numOperation);
     
-    public List<Retraits> findByEnabledTrue();
+    public List<WithDrawal> findByEnabledTrue();
     
-    public List<Retraits> findByCompteClientAndEnabledTrue(Client c);
+    public List<WithDrawal> findByCompteClientAndEnabledTrue(Customer c);
     
 }

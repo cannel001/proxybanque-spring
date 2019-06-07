@@ -5,10 +5,12 @@
  */
 package ci.proxybanquespring.service.impl;
 
-import ci.proxybanquespring.domaine.Client;
-import ci.proxybanquespring.domaine.Courant;
+import ci.proxybanquespring.domaine.Current;
+import ci.proxybanquespring.domaine.Customer;
 import ci.proxybanquespring.repository.CourantRepository;
 import ci.proxybanquespring.service.ICourantService;
+import ci.proxybanquespring.service.ISendEmailService;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +33,11 @@ public class CourantService implements ICourantService {
     @Autowired
     private ConseillerService conseillerService;
 
-    @Override
-    public String generateNumeroCompte() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    @Autowired
+    private IbanCiService ibanCiService;
+
+    @Autowired
+    private ISendEmailService sendEmailService;
 
     @Override
     public Boolean verifNumeroCompte(String numero) {
@@ -47,10 +50,10 @@ public class CourantService implements ICourantService {
     }
 
     @Override
-    public List<Courant> readAllParClient(Long idClient) {
+    public List<Current> readAllParClient(Long idClient) {
 
         if (idClient > 0) {
-            Client client = clientService.readOne(idClient);
+            Customer client = clientService.readOne(idClient);
             return courantRepository.findByClientAndEnabledTrue(client);
         }
         return null;
@@ -59,51 +62,74 @@ public class CourantService implements ICourantService {
 
     @Override
     public int countByConseiller(String email) {
-        
-        int cpt=0;
+
+        int cpt = 0;
 
         if (!"".equals(email)) {
-            
+
             //recuperation de la liste de tous les clients
-            List<Client> listClient=clientService.readAllByConseiller(conseillerService.readOne(email));
-            
-            //compter le nombre des comptes pour chaque clients si la liste des clients est different de null
-            if(!listClient.isEmpty()){
-                
-                for (Client client : listClient) {
-                    if(!readAllParClient(client.getId()).isEmpty()){
-                        cpt+=readAllParClient(client.getId()).size();
+            List<Customer> listClient = clientService.readAllByConseiller(conseillerService.readOne(email));
+
+            //compter le nombre des accounts pour chaque clients si la liste des clients est different de null
+            if (!listClient.isEmpty()) {
+
+                for (Customer client : listClient) {
+                    if (!readAllParClient(client.getId()).isEmpty()) {
+                        cpt += readAllParClient(client.getId()).size();
                     }
                 }
             }
-            
+
         }
         return cpt;
 
     }
 
     @Override
-    public Courant create(Courant t) {
+    public Current create(Current t) {
 
         if (t != null) {
             t.setDateCreation(new Date());
             t.setDateUpdate(new Date());
             t.setEnabled(true);
-            return courantRepository.save(t);
+            t.setNumCpt(ibanCiService.generate().toString());
+            t.setSolde(t.getMontantInitial());
+
+            Current currentRetourne = courantRepository.save(t);
+
+            if (currentRetourne != null) {
+                //envoi de l'email au client
+                String nomDestinataire = "Moi";
+                String emailDestinataire = currentRetourne.getClient().getEmail();
+                String messageEmail = "La bienvenue sur la plateforme PROXY BANQUE G6\n\nInformations concernant"
+                        + " votre account courant"
+                        + "\nIBAN : " + currentRetourne.getNumCpt()
+                        + "\nDate d'ouverture : " + (new SimpleDateFormat("dd/MM/yyyy")).format(new Date()) 
+                        + "\nMontant : "
+                        + currentRetourne.getMontantInitial()
+                        + "\nSolde : "
+                        + currentRetourne.getSolde();
+                String sujet = "Ouverture d'un account courant";
+
+                //envoi du mail
+                sendEmailService.sendMyEmail(nomDestinataire, emailDestinataire, messageEmail, sujet);
+                
+                return currentRetourne;
+            }
         }
         return null;
 
     }
 
     @Override
-    public List<Courant> readAll() {
+    public List<Current> readAll() {
 
         return courantRepository.findByEnabledTrue();
 
     }
 
     @Override
-    public Courant readOne(String pk) {
+    public Current readOne(String pk) {
 
         if (!"".equals(pk)) {
             return courantRepository.findByNumCptAndEnabledTrue(pk);
@@ -113,7 +139,7 @@ public class CourantService implements ICourantService {
     }
 
     @Override
-    public Courant update(Courant t) {
+    public Current update(Current t) {
 
         if (t != null) {
             t.setDateUpdate(new Date());
@@ -124,7 +150,7 @@ public class CourantService implements ICourantService {
     }
 
     @Override
-    public Boolean delete(Courant t) {
+    public Boolean delete(Current t) {
 
         if (t != null) {
             t.setDateUpdate(new Date());

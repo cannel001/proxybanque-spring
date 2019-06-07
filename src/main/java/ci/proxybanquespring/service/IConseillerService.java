@@ -5,7 +5,8 @@
  */
 package ci.proxybanquespring.service;
 
-import ci.proxybanquespring.domaine.Conseiller;
+import ci.proxybanquespring.domaine.Advisor;
+
 import java.util.List;
 
 /**
@@ -16,21 +17,21 @@ public interface IConseillerService {
 
     public String cryptagePssword(String password);
 
-    public Conseiller authentification(String email, String password);
+    public Advisor authentification(String email, String password);
 
-    public Conseiller readOneByEmail(String email);
+    public Advisor readOneByEmail(String email);
 
     public void conseillerParDefaut();
 
-    public Conseiller create(Conseiller t);
+    public Advisor create(Advisor t);
 
-    public List<Conseiller> readAll();
+    public List<Advisor> readAll();
 
-    public Conseiller readOne(String email);
+    public Advisor readOne(String email);
 
-    public Conseiller update(Conseiller t);
+    public Advisor update(Advisor t);
 
-    public Boolean delete(Conseiller t);
+    public Boolean delete(String email);
     
     public String genererCode();
 

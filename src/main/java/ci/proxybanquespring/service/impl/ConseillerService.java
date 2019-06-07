@@ -5,11 +5,10 @@
  */
 package ci.proxybanquespring.service.impl;
 
-import ci.proxybanquespring.domaine.Conseiller;
+import ci.proxybanquespring.domaine.Advisor;
 import ci.proxybanquespring.domaine.Roles;
 import ci.proxybanquespring.repository.ConseillerRepository;
 import ci.proxybanquespring.service.IConseillerService;
-import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -39,7 +38,7 @@ public class ConseillerService implements IConseillerService {
     }
 
     @Override
-    public Conseiller authentification(String email, String password) {
+    public Advisor authentification(String email, String password) {
 
         if (!"".equals(email) && !"".equals(password)) {
             return conseillerRepository.findByEmailAndPasswordAndEnabledTrue(email, password);
@@ -49,7 +48,7 @@ public class ConseillerService implements IConseillerService {
     }
 
     @Override
-    public Conseiller readOneByEmail(String email) {
+    public Advisor readOneByEmail(String email) {
 
         if (!"".equals(email)) {
             return conseillerRepository.findByEmailAndEnabledTrue(email);
@@ -59,7 +58,7 @@ public class ConseillerService implements IConseillerService {
     }
 
     @Override
-    public Conseiller create(Conseiller t) {
+    public Advisor create(Advisor t) {
 
         if (t != null) {
             t.setDateCreation(new Date());
@@ -72,14 +71,14 @@ public class ConseillerService implements IConseillerService {
     }
 
     @Override
-    public List<Conseiller> readAll() {
+    public List<Advisor> readAll() {
 
         return conseillerRepository.findByEnabledTrue();
 
     }
 
     @Override
-    public Conseiller readOne(String email) {
+    public Advisor readOne(String email) {
 
         if (!"".equals(email)) {
             return conseillerRepository.findByEmailAndEnabledTrue(email);
@@ -89,7 +88,7 @@ public class ConseillerService implements IConseillerService {
     }
 
     @Override
-    public Conseiller update(Conseiller t) {
+    public Advisor update(Advisor t) {
 
         if (t != null) {
             t.setDateUpdate(new Date());
@@ -100,7 +99,9 @@ public class ConseillerService implements IConseillerService {
     }
 
     @Override
-    public Boolean delete(Conseiller t) {
+    public Boolean delete(String email) {
+        
+        Advisor t=readOne(email);
 
         if (t != null) {
             t.setDateUpdate(new Date());
@@ -113,39 +114,39 @@ public class ConseillerService implements IConseillerService {
 
     @Override
     public void conseillerParDefaut() {
-        
-        System.out.println("************** passage dans conseiller par defaut *****************");
 
-        if(conseillerRepository.findByEnabledTrue().isEmpty()){
-            
-            Set<Roles> mesRoles=new HashSet<>();
-            Set<Roles> mesRoles2=new HashSet<>();
-            
+        System.out.println("************** passage dans advisor par defaut *****************");
+
+        if (conseillerRepository.findByEnabledTrue().isEmpty()) {
+
+            Set<Roles> mesRoles = new HashSet<>();
+            Set<Roles> mesRoles2 = new HashSet<>();
+
             mesRoles.add(new Roles("ADMIN"));
             mesRoles2.add(new Roles("USER"));
-            
-            System.out.println("************** creation du nouveau conseiller *****************");
-            Conseiller conseiller=new Conseiller();
-            Conseiller conseiller2=new Conseiller();
-            
-            conseiller.setNom("Root");
-            conseiller.setEmail("root@root.com");
-            conseiller.setPassword((new BCryptPasswordEncoder()).encode("proxybanque"));
-            conseiller.setRoleses(mesRoles);
-            
-            conseiller2.setNom("user");
-            conseiller2.setEmail("user@user.com");
-            conseiller2.setPassword((new BCryptPasswordEncoder()).encode("proxybanque"));
-            conseiller2.setRoleses(mesRoles2);
-            
-            this.create(conseiller);
-            this.create(conseiller2);
-            
-            System.out.println("************** nouveau conseiller cree *****************");
+
+            System.out.println("************** creation du nouveau advisor *****************");
+            Advisor advisor = new Advisor();
+            Advisor advisor2 = new Advisor();
+
+            advisor.setNom("Root");
+            advisor.setEmail("root@root.com");
+            advisor.setPassword((new BCryptPasswordEncoder()).encode("proxybanque"));
+            advisor.setRoleses(mesRoles);
+
+            advisor2.setNom("user");
+            advisor2.setEmail("user@user.com");
+            advisor2.setPassword((new BCryptPasswordEncoder()).encode("proxybanque"));
+            advisor2.setRoleses(mesRoles2);
+
+            this.create(advisor);
+            this.create(advisor2);
+
+            System.out.println("************** nouveau advisor cree *****************");
         }
 
     }
-    
+
     @Override
     public String genererCode() {
 

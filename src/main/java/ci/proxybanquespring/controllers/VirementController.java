@@ -58,40 +58,40 @@ public class VirementController {
         String cptCrediter=request.getParameter("cptCrediter");
         Double montant=Double.valueOf(request.getParameter("montant"));
         
-        //verifier l'existance du compte debiteur
+        //verifier l'existance du account debiteur
         if(operationService.typeCompte(cptDebiter) == null){
-            request.getSession().setAttribute("failure", "Le compte debiteur n'existe pas");
+            request.getSession().setAttribute("failure", "Le account debiteur n'existe pas");
             return "redirect:/virement";
         }
         
-        //verifier l'existance du compte crediteur
+        //verifier l'existance du account crediteur
         if(operationService.typeCompte(cptCrediter) == null){
-            request.getSession().setAttribute("failure", "Le compte crediteur n'existe pas");
+            request.getSession().setAttribute("failure", "Le account crediteur n'existe pas");
             return "redirect:/virement";
         }
         
-        //verifier contrainte meme compte
+        //verifier contrainte meme account
         if(cptCrediter.equals(cptDebiter)){
-           request.getSession().setAttribute("failure", "Virement impossible entre le meme compte");
+           request.getSession().setAttribute("failure", "Transfer impossible entre le meme account");
             return "redirect:/virement"; 
         }
         
-        //verifier contrainte compte à compte
+        //verifier contrainte account à account
         if(!virementService.contrainteCompte(cptDebiter, cptCrediter)){
-           request.getSession().setAttribute("failure", "Virement impossible entre ces deux comptes");
+           request.getSession().setAttribute("failure", "Transfer impossible entre ces deux accounts");
             return "redirect:/virement"; 
         }
         
-        //verifier le solde du compte debiteur
+        //verifier le solde du account debiteur
         if(!operationService.verifSolde(cptDebiter, montant)){
-           request.getSession().setAttribute("failure", "Le solde du compte debiteur est insuffisant");
+           request.getSession().setAttribute("failure", "Le solde du account debiteur est insuffisant");
             return "redirect:/virement"; 
         }
         
         Long reference=virementService.virementCompteACompte(cptDebiter, cptCrediter, montant);
         
         if(reference!=null){
-            request.getSession().setAttribute("success", "Virement effectué avec succès");
+            request.getSession().setAttribute("success", "Transfer effectué avec succès");
         }else{
             request.getSession().setAttribute("failure", "Erreur inattendue survenue pendant l'operation");
         }

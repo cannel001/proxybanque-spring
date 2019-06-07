@@ -5,7 +5,6 @@
  */
 package ci.proxybanquespring.repository;
 
-import ci.proxybanquespring.domaine.Billetage;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

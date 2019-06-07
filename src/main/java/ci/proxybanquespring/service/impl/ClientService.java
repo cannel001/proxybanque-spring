@@ -5,8 +5,8 @@
  */
 package ci.proxybanquespring.service.impl;
 
-import ci.proxybanquespring.domaine.Client;
-import ci.proxybanquespring.domaine.Conseiller;
+import ci.proxybanquespring.domaine.Customer;
+import ci.proxybanquespring.domaine.Advisor;
 import ci.proxybanquespring.repository.ClientRepository;
 import ci.proxybanquespring.service.IClientService;
 import java.util.Date;
@@ -26,17 +26,17 @@ public class ClientService implements IClientService {
     private ClientRepository clientRepository;
 
     @Override
-    public List<Client> readAllByConseiller(Conseiller conseiller) {
+    public List<Customer> readAllByConseiller(Advisor advisor) {
 
-        if (conseiller != null) {
-            return clientRepository.findByConseillerAndEnabledTrue(conseiller);
+        if (advisor != null) {
+            return clientRepository.findByConseillerAndEnabledTrue(advisor);
         }
         return null;
 
     }
 
     @Override
-    public Client create(Client t) {
+    public Customer create(Customer t) {
 
         if (t != null) {
             t.setDateCreation(new Date());
@@ -49,14 +49,14 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public List<Client> readAll() {
+    public List<Customer> readAll() {
 
         return clientRepository.findByEnabledTrue();
 
     }
 
     @Override
-    public Client readOne(Long pk) {
+    public Customer readOne(Long pk) {
 
         if (pk > 0) {
             return clientRepository.findByIdAndEnabledTrue(pk);
@@ -66,7 +66,7 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public Client update(Client t) {
+    public Customer update(Customer t) {
 
         if (t != null) {
             t.setDateUpdate(new Date());
@@ -77,7 +77,7 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public Boolean delete(Client t) {
+    public Boolean delete(Customer t) {
 
         if (t != null) {
             t.setDateUpdate(new Date());
